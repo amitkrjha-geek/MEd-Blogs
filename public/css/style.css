@@ -43,7 +43,7 @@ hr {
 }
 
 .tm-header {
-    background-color: #0CC;
+    background-color: #37517e;
     color: white;
     position: fixed;
     top: 0;
@@ -84,7 +84,7 @@ hr {
 }
 
 .tm-site-logo i {
-    color: #0CC;
+    color: #37517e;
 }
 
 .tm-main {
@@ -126,7 +126,7 @@ hr {
 
 .tm-nav-item:hover .tm-nav-link,
 .tm-nav-item.active .tm-nav-link {
-    color: #0CC;
+    color: #37517e;
     background-color: white;
     text-decoration: none;
 }
@@ -175,7 +175,7 @@ ul {
 }
 
 .tm-social-icon {
-    color: #0CC;
+    color: #37517e;
     transition: all 0.3s ease;
 }
 
@@ -211,7 +211,7 @@ ul {
     width: 480px;
     margin-right: 30px;
     border-radius: 0;
-    border-color: #0CC;
+    border-color: #37517e;
     font-size: 1.2rem;
 }
 
@@ -219,7 +219,7 @@ ul {
     width: 60px;
     height: 60px;
     border: none;
-    background-color: #0CC;
+    background-color: #37517e;
     transition: all 0.3s ease;
 }
 
@@ -278,7 +278,7 @@ ul {
 .tm-new-badge {
     top: 25px;
     right: -10px;
-    background-color: #0CC;
+    background-color: #37517e;
     color: white;
     padding: 5px 20px;
 }
@@ -294,7 +294,7 @@ ul {
 }
 
 .tm-post-link:hover .tm-post-title {
-    color: #0CC;
+    color: #37517e;
 }
 
 .tm-btn {
@@ -305,7 +305,7 @@ ul {
 }
 
 .tm-btn-primary {
-    background-color: #0CC;
+    background-color: #37517e;
     color: white;
     padding: 8px 43px;
     border: none;
@@ -342,7 +342,7 @@ ul {
 
 .tm-paging-item .tm-paging-link:hover,
 .tm-paging-item.active .tm-paging-link {
-    background-color: #0CC;
+    background-color: #37517e;
     color: white;
 }
 
@@ -353,7 +353,7 @@ ul {
 }
 
 .tm-external-link {
-    color: #0CC;
+    color: #37517e;
 }
 
 .tm-external-link:hover {
@@ -382,7 +382,7 @@ ul {
 /* Single Post page */
 
 hr.tm-hr-primary {
-    border-top: 5px solid #0CC;
+    border-top: 5px solid #37517e;
 }
 
 video {
@@ -406,7 +406,7 @@ video {
 
 .form-control {
     height: 45px;
-    border-color: #0CC;
+    border-color: #37517e;
     border-radius: 0;
 }
 
@@ -498,7 +498,14 @@ figcaption {
 
 .tm-color-primary,
 span.tm-color-primary {
-    color: #099;
+    color: #37517e;
+}
+
+div.tm-hp-header {
+    margin-right: 25px;
+    border: 1px solid #fff;
+    padding: 2px 4px;
+    transform: translateX(-2px);
 }
 
 a.tm-color-gray,
@@ -516,6 +523,10 @@ a.tm-color-gray:hover {
 
 button:focus {
     outline: none;
+}
+
+a {
+    color: #fff;
 }
 
 a:hover {
@@ -558,7 +569,7 @@ a:hover figcaption {
 .tm-social-links li a {
     display: block;
     color: white;
-    background-color: #0CC;
+    background-color: #37517e;
     width: 45px;
     height: 45px;
     margin-right: 15px;
