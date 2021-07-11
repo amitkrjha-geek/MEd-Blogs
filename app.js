@@ -4,6 +4,7 @@ const ejs = require('ejs');
 const _ = require('lodash');
 const app = express();
 let blogPosts = [];
+let contacts = [];
 const title = "MEd Blogs";
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,6 +17,21 @@ app.get("/", function(req, res) {
 app.get("/contact", function(req, res) {
     res.render("contact");
 })
+app.post("/contact", function(req, res) {
+    let nDate = new Date();
+    let contact = {
+        name: req.body.name,
+        email: req.body.email,
+        subject: req.body.subject,
+        msg: req.body.message,
+        date: req.body.nDate,
+
+    }
+    contacts.push(contact);
+    console.log(contact);
+    res.redirect("#");
+})
+
 app.get("/compose", function(req, res) {
     res.render("compose");
 })
@@ -36,6 +52,29 @@ app.get("/singlepost/:postName", function(req, res) {
 
 })
 
+app.post("/singlepost/:postName", function(req, res) {
+    const reqTitlle = _.lowerCase(req.params.postName);
+    blogPosts.forEach(function(post) {
+        if (_.lowerCase(post.heading) === reqTitlle) {
+            var today = new Date();
+            let options = {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            };
+            var day = today.toLocaleDateString("en-US", options);
+            post.comments.push({
+                cAuthor: req.body.name,
+                cEmail: req.body.email,
+                cDate: day,
+                cMsg: req.body.message,
+            })
+            res.redirect("#");
+        }
+
+    })
+})
+
 app.post("/compose", function(req, res) {
     var today = new Date();
     let options = {
@@ -54,7 +93,7 @@ app.post("/compose", function(req, res) {
         message: req.body.bMsg,
         comments: [],
     }
-    blogPosts.push(blogPost);
+    blogPosts.unshift(blogPost);
     res.redirect("/")
 })
 
