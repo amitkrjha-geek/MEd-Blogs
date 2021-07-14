@@ -680,7 +680,7 @@ a:hover figcaption {
         position: fixed;
         left: 0;
         top: 0;
-        background-color: rgba(56, 204, 204, 0.75);
+        background-color: #37517e;
         color: white;
         padding: 10px 15px;
         transition: all 0.3s ease;
