@@ -533,6 +533,10 @@ a {
     color: #fff;
 }
 
+p a {
+    color: #37517e;
+}
+
 a:hover {
     text-decoration: none;
     color: #048c8c;
