@@ -16,7 +16,7 @@
                 <div class="col-12">
                     <hr class="tm-hr-primary tm-mb-55">
 
-                    <img src="/img/<%=post.img%>" width="954" height="535" class="img-responsive pb-5" alt="">
+                    <img src="/img/<%= post.img %>" width="954" height="535" class="img-responsive pb-5" alt="">
                 </div>
             </div>
             <div class="row tm-row">
@@ -50,12 +50,14 @@
                                         </figcaption>
                                     </figure>
                                     <div>
-                                        <p>
+                                        <p class="container">
                                             <%=comment.cMsg%>
                                         </p>
                                         <div class="d-flex justify-content-between">
-                                            <a href="#" class="tm-color-primary">REPLY</a>
-                                            <span class="tm-color-primary"><%=comment.cDate%></span>
+                                            <span class="tm-color-primary m-3"><%=comment.cDate  %></span>
+                                            <a href="#" class="tm-color-primary m-3">REPLY</a>
+                                            <a href="#" class="tm-color-primary m-3">Delete</a>
+
                                         </div>
                                     </div>
                                 </div>

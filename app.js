@@ -5,26 +5,50 @@ const _ = require('lodash');
 const multer = require('multer');;
 const app = express();
 const upload = multer({ dest: __dirname + '/public/img' });
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"))
 
-let blogPosts = []; //array containing posts
-let contacts = []; //array containing contacts
+//let blogPosts = []; //array containing posts
+//let contacts = []; //array containing contacts
 const title = "MEd Blogs";
 
 
 
+const blogPostsSchema = {
+    author: String,
+    heading: String,
+    email: String,
+    tags: [],
+    date: String,
+    message: String,
+    comments: [],
+    img: String //img is imagename
+}
+const BlogPost = mongoose.model('BlogPost', blogPostsSchema);
 
 
+const contactsSchema = {
+    name: String,
+    email: String,
+    subject: String,
+    msg: String,
+    date: {},
+    //img is imagename
+}
+const Contact = mongoose.model('Contact', contactsSchema);
 
 
 
 
 app.get("/", function(req, res) {
-    res.render("index", { blogPosts: blogPosts });
+    BlogPost.find({}, function(err, blogPosts) {
+        res.render("index", { blogPosts: blogPosts });
+    })
 })
 
 //..................contact route begin........................
@@ -33,15 +57,18 @@ app.get("/contact", function(req, res) {
 })
 app.post("/contact", function(req, res) {
         let nDate = new Date();
-        let contact = {
+        let contact = new Contact({
             name: req.body.name,
             email: req.body.email,
             subject: req.body.subject,
             msg: req.body.message,
-            date: req.body.nDate,
+            date: nDate,
 
-        }
-        contacts.push(contact);
+        })
+        contact.save();
+        Contact.find({}, function(err, contact) {
+            console.log(contact);
+        })
         res.redirect("#");
     })
     //...................contact route end..........................
@@ -60,9 +87,8 @@ app.post("/compose", upload.single('photo'), function(req, res) {
         };
         var day = today.toLocaleDateString("en-US", options);
         if (req.file) {
-
             console.log(req.file.filename);
-            const blogPost = {
+            const blogPost = new BlogPost({
                 author: req.body.bName,
                 heading: req.body.bHeading,
                 email: req.body.bEmail,
@@ -70,9 +96,9 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                 date: day,
                 message: req.body.bMsg,
                 comments: [],
-                img: req.file.filename
-            }
-            blogPosts.unshift(blogPost);
+                img: req.file.filename //img is imagename
+            });
+            blogPost.save();
             res.redirect("/");
         } else throw 'error';
     })
@@ -89,19 +115,20 @@ app.get("/header", function(req, res) {
 //....................dynamic post route.............................
 
 app.get("/singlepost/:postName", function(req, res) {
-    const reqTitlle = _.lowerCase(req.params.postName);
-    blogPosts.forEach(function(post) {
-        if (_.lowerCase(post.heading) === reqTitlle) {
-            res.render("singlepost", { post: post });
-        }
-    })
+    const reqTitlle = (req.params.postName);
+    BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
+        res.render("singlepost", { post: post });
+
+    });
+
 
 })
 
 app.post("/singlepost/:postName", function(req, res) {
-    const reqTitlle = _.lowerCase(req.params.postName);
-    blogPosts.forEach(function(post) {
-        if (_.lowerCase(post.heading) === reqTitlle) {
+    const reqTitlle = (req.params.postName);
+    BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
+
+        if ((post.heading) === reqTitlle) {
             var today = new Date();
             let options = {
                 day: "numeric",
@@ -114,14 +141,20 @@ app.post("/singlepost/:postName", function(req, res) {
                 cEmail: req.body.email,
                 cDate: day,
                 cMsg: req.body.message,
-            })
+            });
+            post.save();
+
             res.redirect("#");
         }
 
-    })
+
+    });
+
+
+
 })
 
 
-app.listen('3000', function() {
+app.listen('4000', function() {
     console.log("server at 3000");
 })
