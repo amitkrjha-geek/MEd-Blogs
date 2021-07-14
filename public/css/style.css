@@ -30,6 +30,10 @@ hr {
     margin-bottom: 10px;
 }
 
+input[type=file] {
+    transform: translateY(24px);
+}
+
 .form-control::-webkit-input-placeholder {
     color: #999;
 }
