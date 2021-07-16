@@ -49,7 +49,7 @@ const mainContactsSchema = {
     msg: String,
     date: {},
 }
-const Contact = mongoose.model('Contact', mainContactsSchema);
+const MainContact = mongoose.model('MainContact', mainContactsSchema);
 
 app.set('view engine', 'ejs');
 
@@ -65,7 +65,7 @@ app.get('/', function(req, res) {
 })
 app.post('/', function(req, res) {
     let nDate = new Date();
-    let contact = new Contact({
+    let contact = new MainContact({
         name: req.body.name,
         email: req.body.email,
         subject: req.body.subject,
