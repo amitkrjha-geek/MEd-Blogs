@@ -4,7 +4,7 @@ const ejs = require('ejs');
 const _ = require('lodash');
 const multer = require('multer');;
 const app = express();
-const upload = multer({ dest: __dirname + '/public/img' });
+const upload = multer({ dest: __dirname + '/blogpage-assets/public/img' });
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
