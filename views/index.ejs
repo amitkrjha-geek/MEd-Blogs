@@ -1,93 +1,1105 @@
-<%- include('partials/header') -%>
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="container-fluid">
-        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Routine Healthcare Articles,</h1>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center ">Now in your Desktop.......</h1>
-        <main class="tm-main">
-            <!-- Search form -->
-            <div class="row tm-row">
-                <div class="col-12">
-                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">
-                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
-                        <button class="tm-search-button" type="submit">
-                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div class="row tm-row d-flex justify-content-center align-item-center">
+    <title>MEdPedia</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
+    <!-- Favicons -->
+    <link href="assets/img/favicon.ico" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-                <%for(let i=blogPosts.length-1; i>=0;i--)  { %>
-                    <%let post =blogPosts[i]; %>
-                        <a href="/singlepost/<%= post.heading%>">
-                            <article class="col-12 col-md-6 tm-post p-4">
-                                <hr class="tm-hr-primary">
-                                <h2 class="tm-pt-30 tm-color-primary tm-post-title">
-                                    <%= post.heading  %>
-                                </h2>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
-                                <a href="/singlepost/<%= post.heading%>" class="effect-lily tm-post-link tm-pt-20">
-                                    <div class=" tm-post-link-inner">
-                                        <img src="img/<%=post.img%>" alt="Image" height="300px" width="200px">
-                                    </div>
-                                    <span class="position-absolute tm-new-badge">New</span>
-                                </a>
-                                <p class="tm-pt-30">
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-                                    <%= post.message.substring(0,200)%>
-                                        <% if(post.message.length>200){%>
-                                            ... <a href="/singlepost/<%= post.heading%>" class="tm-color-primary">Read More</a>
-                                            <%}%>
-                                </p>
-                                <div class="d-flex justify-content-between tm-pt-45">
-                                    <span class="tm-color-primary">
-                                <% post.tags.forEach(function(tag){ %>
-                                    #<%= tag %> &nbsp;
-                                <%  })%>
-                                
-                                
-                                
-                               </span>
-                                    <span class="tm-color-primary"><%= post.date %></span>
-                                </div>
-                                <hr>
-                                <div class="d-flex justify-content-between">
-                                    <span><%= post.comments.length %> Comments</span>
-                                    <span>by <%= post.author %></span>
-                                </div>
-                            </article>
-                        </a>
-                        <% } %>
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <!-- =======================================================
+
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top ">
+        <div class="container d-flex align-items-center">
+
+            <h1 class="logo me-auto"><a href="#">MEd|Pedia</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="/blog-home">MEd-BLogs</a></li>
+                    <li><a class="nav-link  scrollto" href="#portfolio">First Aid</a></li>
+                    <li><a class="nav-link scrollto" href="#team">Healthy Diet</a></li>
 
 
-            </div>
-            <div class="row tm-row tm-mt-100 tm-mb-75">
-                <!-- <div class="tm-prev-next-wrapper">
-                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
-                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
-                </div>
-                <div class="tm-paging-wrapper">
-                    <span class="d-inline-block mr-3">Page</span>
-                    <nav class="tm-paging-nav d-inline-block">
+                    <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li class="tm-paging-item active">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
-                            </li>
-                            <li class="tm-paging-item">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
-                            </li>   
-                            <li class="tm-paging-item">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
-                            </li>
-                            <li class="tm-paging-item">
-                                <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
+                            <li><a href="#">BMI Calculator</a></li>
+                            <li><a href="#">Pregnant Due Date Calculator</a></li>
+                            <li><a href="#">Vision test</a></li>
+                            <li><a href="#">Hearing Test</a></li>
+                            <li><a href="#">Am I Depressed</a></li>
+                            <li><a href="#">Am I Pregnent</a></li>
+
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown"><a href="#"><span>Keep Home Medicines</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li><a href="#">Paracetamol</a></li>
+                            <li><a href="#">Anti-inflammatory painkillers</a></li>
+                            <li><a href="#">Antihistamines</a></li>
+                            <li><a href="#">Antacids</a></li>
+                            <li><a href="#">Antiseptic cream</a></li>
+                            <li><a href="#">Antacids</a></li>
+                            <li class="dropdown"><a href="#"><span>Other Use Full Items</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="#">Hydrocortisone cream</a></li>
+                                    <li><a href="#">Mouth Ulcers</a></li>
+                                    <li><a href="#">For Burns</a></li>
+                                </ul>
                             </li>
                         </ul>
-                    </nav>
-                </div> -->
+                    </li>
+
+
+
+
+
+
+                    <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
+
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center overlay">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
+                    <h1>
+                        The Most Valuable Thing is Your Health</h1>
+                    <h2>Routine Healthcare Guide,Now in your Desktop</h2>
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                        <a href="https://www.youtube.com/watch?v=wvwXxVT61O4" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+                    </div>
+                </div>
             </div>
-        </main>
-    </div>
-    <%- include('partials/footer') -%>
+        </div>
+
+    </section>
+    <!-- End Hero -->
+
+    <main id="main">
+
+        <!-- ======= About Us Section ======= -->
+        <section id="about" class="about">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>About Us</h2>
+                </div>
+
+                <div class="row content">
+                    <div class="col-lg-6">
+                        <p>
+                            We give Trusted Information About the day to day Healtcare Items.This site is specialy designed to provide basic and sufficient information about the Medicines , First aid and genreal heath realted issues.
+                            <Br>
+                            <B>Though knowing about health is a need of each and every person,This Site is Specialy For You If you are:</B>
+                        </p>
+                        <ul>
+                            <li><i class="ri-check-double-line"></i><b>Health Enthusiast</b>,Want to know basics of health care in brief.</li>
+                            <li><i class="ri-check-double-line"></i><b>A housewife</b>,Taking care of you and your family</li>
+                            <li><i class="ri-check-double-line"></i><b>Student</b>, Who needs to be equipped with basic knowledge of your health</li>
+                            <li><i class="ri-check-double-line"></i><b>Living alone</b>,Don't want want to visit a doctor for silly issues</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 pt-4 pt-lg-0">
+                        <p>
+                            For some basic things you Don't need a doctor,which you Must know and Use hands on, Here we are providing and Kinds of knowledge related to it.<br>
+                            <b>No panic...Your heath On your hands.</b>
+                        </p>
+                        <a href="#" class="btn-learn-more">Learn More</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End About Us Section -->
+
+        <!-- ======= Cliens Section ======= -->
+        <section id="cliens" class="cliens ">
+            <div class="container">
+                <p text-center><b>We collect Information From trusted sites like:</b></p>
+                <div class="row" data-aos="zoom-in">
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019?gclid=CjwKCAjwoNuGBhA8EiwAFxomA9h4_AVHxqezExucAgtLutxiu6N0FJPC3aYw_PTnoCOUvBilxf4RthoCL5kQAvD_BwE">
+                            <img src="assets/img/who.png" class="img-fluid" alt=""></a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <a href="https://www.ima-india.org/ima/">
+                            <img src="assets/img/ima.png" class="img-fluid" alt=""></a>
+
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <a href="https://en.wikipedia.org/wiki/Indian_Medical_Association">
+                            <img src="assets/img/ima2.jpg" class="img-fluid" alt=""></a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <a href="https://www.icmr.gov.in/">
+                            <img src="assets/img/ima.png" class="img-fluid" alt=""></a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <a href="https://twitter.com/imaindiaorg?lang=en">
+                            <img src="assets/img/ima4.png" width="400px" class="img-fluid" alt=""></a>
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <a href="https://www.ima-india.org/jdn/">
+                            <img src="assets/img/ima5.jpg" class="img-fluid" alt=""></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- End Cliens Section -->
+
+        <!-- ======= Why Us Section ======= -->
+        <section id="why-us" class="why-us section-bg">
+            <div class="container-fluid" data-aos="fade-up">
+
+                <div class="row">
+
+                    <div class="col-lg-7 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
+
+                        <div class="content">
+                            <h3>Recommended <strong>Medicines to Keep at Home</strong></h3>
+                            <p>
+                                Minor illness and mild aches or pains are common. It is useful to keep a few medicines at home in case you need something when you can't get to a pharmacy. Always read the labels carefully and follow the instructions, and store the medicines out of the
+                                reach of children. Your pharmacist is a good person to give you more information about over-the-counter medicines which do not need a prescription from your doctor. See your doctor if your symptoms get worse or do not go
+                                away. </p>
+                        </div>
+
+                        <div class="accordion-list">
+                            <ul>
+                                <li>
+                                    <a data-bs-toggle="collapse" class="collapse" data-bs-target="#accordion-list-1"><span>01</span> Paracetamol<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                                    <div id="accordion-list-1" class="collapse show" data-bs-parent=".accordion-list">
+                                        <p>
+                                            Paracetamol <b>eases pain</b>. It also<b> reduces high temperature (fever)</b>. <br>It comes in tablet form for adults and older children and as a liquid for young children and babies. You can also obtain soluble
+                                            tablets and melt-in-the-mouth tablets. If you have young children, paracetamol is perhaps<b> the most important medicine to keep in at all times</b>. <br>Paracetamol is safe at normal doses but is harmful if
+                                            you take too much (overdose). Therefore, it is extremely important to check the right dose for the person taking paracetamol. <br>Be careful <b>not to exceed the maximum amount recommended on the packet</b>.</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a data-bs-toggle="collapse" data-bs-target="#accordion-list-2" class="collapsed"><span>02</span> Anti-inflammatory painkillers<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                                    <div id="accordion-list-2" class="collapse" data-bs-parent=".accordion-list">
+                                        <p>
+                                            These are painkillers which also reduce <b>inflammation</b>. Most need a prescription but you can buy <b>ibuprofen</b> from pharmacies and supermarkets. This is helpful for muscular aches and sprains and can
+                                            be used to relieve period pain. Like <b>paracetamol</b>, ibuprofen also reduces a fever. Ibuprofen also comes in tablet, soluble tablet, melt-in-the-mouth and liquid forms. There are many brands of ibuprofen.
+                                            <br>The dose advised varies with age. Anti-inflammatory painkillers <b>should
+                                            not be used</b> by certain people - for example, if you have, or have had, a stomach or duodenal ulcer.<br> These painkillers should be taken with food if possible, because they can cause irritation if taken
+                                            on an empty stomach. If you develop stomach pain or heartburn after taking ibuprofen tablets, you should stop them. They may interact with some prescribed medication, so check with your pharmacist if you are
+                                            not sure whether you should take them. Ibuprofen and some other anti-inflammatory painkillers are also available as a gel or foam. These can be rubbed directly into the painful area. They are used for painful
+                                            joints if you have
+                                            <b>rheumatoid arthritis or degenerative arthritis (osteoarthritis)</b>. They can also be used for<b> sprains and muscle injuries</b>.</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a data-bs-toggle="collapse" data-bs-target="#accordion-list-3" class="collapsed"><span>03</span> Antihistamines <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                                    <div id="accordion-list-3" class="collapse" data-bs-parent=".accordion-list">
+                                        <p>
+                                            These ease the symptoms of<b> hay fever and other allergies </b>- for example, hives (urticaria), itch, sneezing, watering eyes, and a runny nose. <br>They can be used to<b> reduce the pain and swelling from wasp or bee stings</b>.<br>                                            Some antihistamines may cause drowsiness - for example,<b> chlorphenamine</b> (Piriton®).<br> These may be useful for taking at bedtime, particularly for itchy conditions such as <b>eczema or chickenpox</b>.<br>                                            There are several types which cause less drowsiness and are better for during the day - for example,<b> loratadine and cetirizine</b>. Antihistamine can also be bought as a cream, which can be rubbed on to stings
+                                            and bites.
+
+                                        </p>
+                                    </div>
+                                </li>
+
+
+                                <li>
+                                    <a data-bs-toggle="collapse" data-bs-target="#accordion-list-4" class="collapsed"><span>04</span> Antacids <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                                    <div id="accordion-list-4" class="collapse" data-bs-parent=".accordion-list">
+                                        <p>
+                                            These help to <b>ease indigestion and heartburn</b>.<br> There are various types of antacids - for example, <b>sodium bicarbonate, magnesium trisilicate, aluminium or magnesium hydroxide</b>.<br> They work by
+                                            neutralising the acid content of the stomach. You can also buy more powerful medicines which reduce acid in the stomach - for example, <b>ranitidine and esomeprazole</b>. <br>If you need to use antacids on a
+                                            regular basis, you should see your doctor to discuss this.
+                                        </p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a data-bs-toggle="collapse" data-bs-target="#accordion-list-5" class="collapsed"><span>05</span> Antiseptic cream <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                                    <div id="accordion-list-5" class="collapse" data-bs-parent=".accordion-list">
+                                        <p>
+                                            It is useful to have an antiseptic cream at home. If you use this on<b> minor scrapes, cuts and bites</b>, they are less likely to become infected.<br> Commonly available antiseptic creams include<b> Savlon® and Germolene®</b>.
+                                        </p>
+                                    </div>
+                                </li>
+
+                                <li>
+
+                                    <a data-bs-toggle="collapse" data-bs-target="#accordion-list-6" class="collapsed"><span>06</span> Other useful items <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                                    <div id="accordion-list-6" class="collapse" data-bs-parent=".accordion-list">
+                                        <p>
+                                            If anyone in your family is prone to <b>mouth soreness or mouth ulcers</b> it is a good idea to keep something to help with that such as <b>Bonjela®</b>.<br> It is worth keeping a variety of plasters at home
+                                            in case of minor cuts and grazes. Use hypo-allergenic ones if anyone in your house gets a rash with plasters. You may also find <b>thin adhesive strips</b> such as <b>Steri-strips®</b> useful for cuts if you
+                                            are able to use them. <br>These pull the edges of a wound together. (If a cut does not stop bleeding after you have applied pressure and a plaster or Steri-strips®, you should attend your local Accident and
+                                            Emergency Department. Continue to press on the cut until you get there to limit the bleeding.) A pair of tweezers may be handy for extracting splinters.</p>
+                                    </div>
+
+
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-5 align-items-stretch order-1 order-lg-2 img" style='background-image: url("assets/img/medi.png");' data-aos="zoom-in" data-aos-delay="150">&nbsp;</div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End Why Us Section -->
+
+        <!-- ======= Skills Section ======= -->
+        <section id="skills" class="skills">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    <div class="col-lg-6 d-flex align-items-center justify-content-center" data-aos="fade-right" data-aos-delay="100">
+                        <img src="assets/img/diet.png" class="img-fluid" alt="">
+                    </div>
+                    <div class="col-lg-6 p-5 pt-lg-0 content" data-aos="fade-left" data-aos-delay="100">
+                        <h3>Tips For Healthy Diet</h3>
+                        <p class="fst-italic pl-3 pr-3">
+
+                            <ol type="1">
+                                <li> A balanced diet should offer around 60-70% of total calories from <b>carbohydrates</b>, 10-12% from <b>proteins</b> and 20-25% of total calories from <b>fat</b>.</li>
+                                <li>The most important rule of healthy eating is <b>not skipping any meal</b>.Skipping meals lowers your metabolic rate.Normal eating includes 3 major meals and 2 snacks between meals. Also, Never skip breakfast.It is the foremost
+                                    vital meal of the day.</li>
+                                <li>It is important to <b>stop when you feel full</b>. This will help you maintain your weight to an extent. This also will help you remain alert and feeling your best.</li>
+                                <li>Keep a supply of <b>healthy snacks</b> to hand. This will stop you from eating an unhealthy snack when hungry.</li>
+                                <li>Eat five portions of <b>fruit and vegetables every day</b>.</li>
+                                <li>Take Omega-3 and Vitamin D Supplements</li>
+                                <li>Remove all visible fat from food before you cook it – take the skin off chicken and trim the white fat off any meat.</li>
+                                <li>Limit stimulants such as <b>caffeine, alcohol and refined sugar</b>.</li>
+                            </ol>
+
+                        </p>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End Skills Section -->
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services section-bg">
+            <div class="container pl-5 pr-4" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Resources</h2>
+                    <p>
+                        Each Link Directs you to a Trusted Consol where you can perform the respective tests for free.
+                    </p>
+                </div>
+                <div class="row pb-5">
+
+
+                    <div class="col-xl-4  d-flex align-items-center justify-content-center pb-5 text-center" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="icon-box">
+                            <div class="icon"><img src="assets/img/bmi.png" width=" 50px "> </div>
+                            <h4><a href="https://www.calculator.net/bmi-calculator.html">BMI Calculator</a></h4>
+                            <p>BMI (body mass index) is a measure of whether you're a healthy weight for your height. Use this BMI calculator to check the adults in your family.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4  d-flex align-items-center justify-content-center pb-5 text-center" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="icon-box">
+                            <div class="icon">
+                                <img src="assets/img/vision.png" width=" 50px ">
+                            </div>
+                            <h4><a href="https://www.essilor.com/en/vision-tests/test-your-vision/">Vision Test</a></h4>
+                            <p>Take your Vision tests Online with the help of latest technology and trusted resources.<br> No need to go at labs.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 d-flex align-items-center justify-content-center pb-5 text-center " data-aos="zoom-in " data-aos-delay="400 ">
+                        <div class="icon-box ">
+                            <img src="assets/img/preg.png" width=" 50px ">
+                            <div class="icon "></div>
+                            <h4><a href="https://patient.info/doctor/pregnancy-due-date-calculator">Pregnancy Due Date Calculator</a></h4>
+                            <p>This pregnancy due date calculator will give you a rough idea of when your baby should be born.<br>Don't forget Your Date! </p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row pb-5">
+
+
+                    <div class="col-xl-4  d-flex align-items-center justify-content-center pb-5 text-center" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="icon-box">
+                            <div class="icon"><img src="assets/img/hear.png" width=" 50px "> </div>
+                            <h4><a href="https://www.resound.com/en-in/online-hearing-test/take-test">Hearing Test</a></h4>
+                            <p>Take your Hearing tests Online with the help of latest technology and trusted resources.As Listning is a vital part of your wellness.<br> No need to go at labs.</p>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4  d-flex align-items-center justify-content-center pb-5 text-center" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="icon-box">
+                            <div class="icon">
+                                <img src="assets/img/deppr.png" width=" 50px ">
+                            </div>
+                            <h4><a href=" https://patient.info/news-and-features/quiz-am-i-depressed">Am I Depressed</a></h4>
+                            <p>If you’re worried you might be suffering from depression. This quiz will help you to establish whether you’re experiencing some of the tell-tale signs of a mental health condition</p>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 d-flex align-items-center justify-content-center pb-5 text-center " data-aos="zoom-in " data-aos-delay="400 ">
+                        <div class="icon-box ">
+                            <img src="assets/img/bsugar.png" width=" 30px ">
+                            <div class="icon "></div>
+                            <h4><a href="https://www.adityabirlacapital.com/healthinsurance/active-together/health-tools/blood-glucose/">Blood Sugar Level Calculator</a></h4>
+                            <p>Diabetes is a serious health condition. For its treatment to work, you must learn to manage blood sugar levels. You can use a blood sugar level calculator to understand your current condition and practice self-management better.
+                                Read on to learn more.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+        <!-- End Services Section -->
+
+
+        <!-- ======= Portfolio Section ======= -->
+        <div id="first-aid">
+            <section id="portfolio" class="portfolio ">
+                <div class="container pl-5 pr-4" data-aos="fade-up">
+
+                    <div class="section-title">
+                        <H2>Check Your First Aid:</H2>
+                    </div>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <span>01</span>Cut/Scrape:
+                        </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="row p-5 ">
+                                        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                            <h2>Cut/Scrape</h2>
+                                            <p>Cut/Scrape: If there is bleeding, press firmly over the site with a clean cloth until it stops, anywhere from three to 15 minutes. Clean with lukewarm running water and gently pat dry. If the skin is broken,
+                                                apply a thin layer of <b>antibiotic ointment</b>, then cover with a <b>bandage or gauze and adhesive tape</b>. If you can’t control the bleeding after several attempts with direct pressure, call your pediatrician
+                                                or head to an Emergency Room. Continue utilize antibiotic ointment and apply a new bandage daily (or more often if necessary) until the cut heals. If the wound appears to be forming or draining pus or becomes
+                                                swollen, tender, or red, see a doctor right away to treat the infection.
+
+                                            </p>
+
+                                        </div>
+                                        <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                            <img src="assets/img/cut.jpeg " class="img-fluid animated " width="700px " alt=" ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <span>02</span>Burns:
+    
+                        </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="row p-5 ">
+                                        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                            <h2>Burn:</h2>
+                                            <p>Immediately hold injury under <b>cold running water or apply a cold, wet towel</b> until the pain subsides. <b>Cover</b> any small bitemers with a loose bandage or gauze and tape. Call a doctor as soon as possible
+                                                if burns are on the face, hands, or genitals, or if they’re larger than 1/4 inch anywhere on the body. If the injury looks rooted, go to the Emergency Room. For a burn covering a tenth of the body or more,
+                                                don’t use cold compresses;<b> call 108</b> and cover up with a <b>clean sheet</b> or a <b>blanket</b> to prevent hypothermia until help arrives. DO NOT pop any bitemers yourself. If the skin breaks, apply
+                                                antibiotic cream and cover the area with a bandage or gauze until it’s healed. Watch for any redness, swelling, tenderness, or discharge for these are all signs of infection.
+
+
+                                            </p>
+
+                                        </div>
+                                        <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                            <img src="assets/img/burn.jpg " class="img-fluid animated " alt=" ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <span>03</span>Insect Bite/Sting:
+    
+                        </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="row p-5 ">
+                                        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                            <h2>Insect Bite/Sting:</h2>
+                                            <p>Insect Bite/Sting: If the insect left a stinger, gently scrape the skin with your <b>fingernail</b> to remove it without breaking it. Refrain from using <b>tweezers</b> because that can squeeze more venom out
+                                                of the stinger, causing further injury.<b> Call 108</b> if you have trouble breathing, coughing, or develop a hoarse voice, hives, or swollen lips or tongue. To combat itching, apply 1%<b> hydrocortisone cream </b>or
+                                                a <b>topical antihistamine</b> if the skin isn’t broken or scabbed. Contact your doctor if you suspect a tick bite. They may want to test for Lyme disease and other tick-borne diseases.
+                                            </p>
+
+                                        </div>
+                                        <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                            <img src="assets/img/insect.jpg " class="img-fluid animated " width="700px " alt=" ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <span>04</span>Fractures:
+    
+                    </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row p-5 ">
+                                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                        <h2>Fractures:</h2>
+                                        <p>Fractures are broken bones, and they can occur as a result of falls or other harsh impacts. When this happens, the affected part should be immobilized, and additional manipulation of the affected area should be
+                                            avoided. Remember that a fracture could sever a blood vessel or a nerve if it is not immobilized, resulting in a much more severe injury.<b> Immobilize the injured part</b>, and transport the patient to the
+                                            nearest hospital or medical clinic as soon as possible.
+
+                                    </div>
+                                    <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                        <img src="assets/img/fact.jpg " class="img-fluid animated " width="700px " alt=" ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        <span>05</span>Sprains, Strains, and Tears:
+    
+                    </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row p-5 ">
+                                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                        <h2>Sprains, Strains, and Tears:</h2>
+                                        <p>When a sprain, strain, or tear takes place, the first thing to do is <b>immobilize</b> the affected area,<b> elevate it</b>, and <b>apply ice</b> and compression to reduce swelling. Strains accompanied by severe
+                                            pain, swelling, or discoloration may require a trip to the hospital. In milder cases, rest, ice, and anti-inflammatory medication will help the area heal.
+
+                                    </div>
+                                    <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                        <img src="assets/img/sprain.jpeg " class="img-fluid animated " width="700px " alt=" ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <span>06</span>Nosebleed:
+    
+                    </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row p-5 ">
+                                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                        <h2>Nosebleed:</h2>
+                                        <p>Sit upright and don’t tilt your head back. Loosen any tight clothing around your neck. Pinch the lower end of the nose close to the nostrils and lean forward while you apply constant pressure for five to ten minutes.
+                                            Don’t release and check the nose; it could prolong the bleeding. If the nosebleed is the result of trauma, you can reduce swelling by holding an ice pack against the bridge of the nose after the bleeding slows
+                                            down. If it persists for more than ten minutes or returns later, call your doctor or go to the Emergency Room to check for breakage.
+                                        </p>
+
+                                    </div>
+                                    <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                        <img src="assets/img/nosebleed.jpg " class="img-fluid animated " width="700px " alt=" ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSeven">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        <span>07</span>Sunburns:
+    
+                    </button>
+                        </h2>
+                        <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row p-5 ">
+                                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                        <h2>Sunburn:</h2>
+                                        <p>If you feel dizzy, weak, sick to your stomach, or are spiking a high fever—or if the burn is severe (oozing bitemers form within 48 hours) and covering a significant portion of your body—go to the Emergency Room.
+                                            If your only symptoms are discomfort and redness, apply <b>cold compresses</b> and <b>aloe vera</b> lotion and take some ibuprofen. Avoid creams with petroleum, which can cause infection, or anything ending
+                                            in -Caine. When not administered by a professional, these drugs may be dangerous. </p>
+
+                                    </div>
+                                    <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                        <img src="assets/img/sunburn.jpeg " class="img-fluid animated " width="700px " alt=" ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingEight">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        <span>08</span>Splinter:
+    
+                    </button>
+                        </h2>
+                        <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row p-5 ">
+                                    <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1 " data-aos="fade-up " data-aos-delay="200 ">
+                                        <h2>Splinter:</h2>
+                                        <p>Use soap and water to wash around the splinter. Clean a pair of tweezers with <b>rubbing alcohol</b> and slowly pull the splinter out. Rewash the skin. If you come across a fragment that is hard to remove, leave
+                                            it for a day or so to see if it will come out on its own.
+                                        </p>
+
+                                    </div>
+                                    <div class="col-lg-6 order-1 order-lg-2 hero-img d-flex justify-content-center align-items-center text-center " data-aos="zoom-in " data-aos-delay="200 ">
+                                        <img src="assets/img/splinter.jpg " class="img-fluid animated " width="700px " alt=" ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+        <!-- End Portfolio Section -->
+
+        <!-- ======= Team Section ======= -->
+        <section id="team" class="team section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Basic Health Problems</h2>
+                    <p></p>
+                </div>
+                <div class="row">
+
+                    <!-- common cold. -->
+
+                    <div class="col-lg-6 mt-2">
+                        <div class="member " data-aos="zoom-in" data-aos-delay="100">
+                            <div class="member-content d-flex align-items-start">
+                                <div class="pic "><img src="assets/img/commoncold.png" width="1000px" class="img-fluid" alt=""></div>
+                                <div class="member-info">
+                                    <h4>Common Cold</h4>
+                                    <span>A common viral infection of the nose and throat.</span>
+                                    <p>
+                                        <ul>
+                                            <li>
+                                                Common cold can be caused by many different types of viruses. Symptoms include a runny nose, sneezing and congestion.</li>
+                                            <li>
+                                                It spreads by airborne respiratory droplets (coughs or sneezes).
+                                            </li>
+                                            <li>
+                                                Treatment consists of anti-inflammatories and decongestants, most people recover on their own within two weeks.
+                                            </li>
+                                        </ul>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class=" cta-btn-container text-center pt-3">
+                                <a href="https://www.mayoclinic.org/diseases-conditions/common-cold/symptoms-causes/syc-20351605" class="btn btn-info" role="button">Learn more</a>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-6 mt-2 ">
+                        <div class="member pb-5 " data-aos="zoom-in" data-aos-delay="100">
+                            <div class="member-content d-flex align-items-start">
+                                <div class="pic "><img src="assets/img/fever.jpeg" width="1000px" class="img-fluid" alt=""></div>
+                                <div class="member-info">
+                                    <h4>Fever</h4>
+                                    <span>A Result of immune system's response to a foreign invader.</span>
+                                    <p>
+                                        <ul>
+                                            <li>A temporary increase in average body temperature of 98.6°F (37°C).</li>
+                                            <li>
+                                                Its often due to an illness.
+                                            </li>
+                                            <li>
+                                                Medications such as paracetamol and ibuprofen may help to ease discomfort.
+                                            </li>
+                                            <li>
+                                                Use of ibuprofen should be done under guidence of your doctor.
+                                            </li>
+                                        </ul>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="cocta-btn-container text-center pt-4">
+                                <a href="https://www.mayoclinic.org/diseases-conditions/common-cold/symptoms-causes/syc-20351605" class="btn btn-info" role="button">Learn more</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--end of common cold -->
+
+
+                </div>
+                <div class="row ">
+
+
+                    <div class="col-lg-6 mt-5">
+                        <div class="member " data-aos="zoom-in" data-aos-delay="100">
+                            <div class="member-content d-flex align-items-start">
+                                <div class="pic "><img src="assets/img/headache.jpg" width="1000px" class="img-fluid" alt=""></div>
+                                <div class="member-info">
+                                    <h4>Headache</h4>
+                                    <span>A painful sensation in any part of the head.</span>
+                                    <p>
+                                        <ul>
+                                            <li>
+                                                Headaches can have causes that aren't due to underlying disease.
+                                            </li>
+                                            <li>
+                                                Headaches can be caused by lack of sleep,an incorrect eyeglass prescription, stress, loud noise exposure or tight head wear.</li>
+                                            <li>
+                                                Remedies that may reduce headache pain include aspirin, paracetamol and ibuprofen. Resting in a darkened room may also help.
+                                            </li>
+                                        </ul>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="cocta-btn-container text-center ">
+                                <a href="https://www.medicalnewstoday.com/articles/73936#:~:text=Headaches%20are%20a%20common%20health,physical%2C%20such%20as%20an%20injury " class="btn btn-info " role="button ">Learn more</a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- <headche> -->
+                    <div class="col-lg-6 mt-5">
+                        <div class="member " data-aos="zoom-in" data-aos-delay="100">
+                            <div class="member-content d-flex align-items-start">
+                                <div class="pic "><img src="assets/img/stomachache.jpg" width="1000px" class="img-fluid" alt=""></div>
+                                <div class="member-info">
+                                    <h4>Stomach ache</h4>
+                                    <span>Pain from inside the abdomen or the outer muscle wall.</span>
+                                    <p>
+                                        <ul>
+                                            <li>
+                                                Abdominal pain can have causes that aren't due to underlying disease.
+                                            </li>
+                                            <li>
+                                                Examples include constipation, wind, overeating, stress or muscle strain.
+                                            </li>
+                                            <li>
+                                                Taking an antacid or anti-wind medication and eating smaller meals may help to relieve heartburn or wind.
+                                            </li>
+                                        </ul>
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="cocta-btn-container text-center pt-5 ">
+                                <a href="https://www.webmd.com/pain-management/guide/abdominal-pain-causes-treatments " class="btn btn-info " role="button ">Learn more</a>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <!-- <end of headache> -->
+
+
+
+                </div>
+
+                <!-- <end stomach ache> -->
+        </section>
+        <!-- End Team Section -->
+
+
+        <!-- ======= Pricing Section ======= -->
+        <section id="pricing" class="pricing ">
+            <div class="container " data-aos="fade-up ">
+
+                <div class="section-title ">
+                    <h2>Covid:19! Are you Aware?</h2>
+                    <p>The new and ongoing coronavirus (COVID-19) pandemic, caused by a new strain of coronavirus, has resulted in extraordinary measures around the world to contain, slow the pace, or reduce the impact of the virus.</p>
+                </div>
+
+                <div class="row ">
+
+                    <div class="col-lg-4 " data-aos="fade-up " data-aos-delay="100 ">
+                        <div class="box featured" id="symptoms">
+                            <div class="row  ">
+                                <div class="col-lg-12 justify-content-center pt-0  order-2 order-lg-1 " data-aos="fade-up ">
+                                    <h2>Symptoms:</h2>
+                                    <p>COVID-19 affects different people in different ways. Most infected people will develop mild to moderate illness and recover without hospitalization.
+                                    </p>
+                                    <hr>
+
+                                    <p><b>
+                                        Most common symptoms:</b><br>
+                                        <img src="assets/img/ring.png" width="5px"> Fever<br>
+                                        <img src="assets/img/ring.png" width="5px"> Dry Cough<br>
+                                        <img src="assets/img/ring.png" width="5px"> Tiredness<br> Less common symptoms:</p>
+                                    <p><b>Least common Symptoms:</b><br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Aches and Pains<br>
+                                        <img src="assets/img/ring.png" width="5px"> Sore Throat<br>
+                                        <img src="assets/img/ring.png" width="5px"> Diarrhoea<br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Conjunctivitis<br>
+                                        <img src="assets/img/ring.png" width="5px"> Headache<br>
+                                        <img src="assets/img/ring.png" width="5px">Loss of taste or smell<br>
+                                        <img src="assets/img/ring.png" width="5px">Discolouration of fingers or toes<br>
+
+                                    </p>
+                                    <p>
+                                        <b>Symptoms of severe COVID‐19 disease include:</b><br>
+                                        <img src="assets/img/ring.png" width="5px"> Shortness of breath,<br>
+                                        <img src="assets/img/ring.png" width="5px"> Loss of appetite,<br>
+                                        <img src="assets/img/ring.png" width="5px"> Persistent pain or pressure in the chest<br>
+
+
+
+
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-4 mt-lg-0 " data-aos="fade-up " data-aos-delay="200" id="prevention">
+                        <div class="box featured ">
+                            <div class="row  ">
+                                <div class="col-lg-12 justify-content-center pt-0  order-2 order-lg-1 " data-aos="fade-up ">
+                                    <h2>Prevention:</h2>
+                                    <p>Protect yourself and others around you by knowing the facts and taking appropriate precautions. Follow advice provided by your local health authority.
+                                    </p>
+                                    <hr>
+
+
+                                    <p><b>To prevent the spread of COVID-19:</b><br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Clean your hands often. Use soap and water, or an alcohol-based hand rub.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Maintain a safe distance from anyone who is coughing or sneezing.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Wear a mask when physical distancing is not possible.<br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Don’t touch your eyes, nose or mouth.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Cover your nose and mouth with your bent elbow or a tissue when you cough or sneeze.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Stay home if you feel unwell.<br>
+                                        <img src="assets/img/ring.png" width="5px"> If you have a fever, cough and difficulty breathing, seek medical attention.<br>
+
+                                    </p>
+                                    <hr>
+                                    <p>Calling in advance allows your healthcare provider to quickly direct you to the right health facility. This protects you, and prevents the spread of viruses and other infections. Masks Masks can help prevent the spread
+                                        of the virus from the person wearing the mask to others. </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-4 mt-lg-0 " data-aos="fade-up " data-aos-delay="300 ">
+                        <div class="box featured" id="treatment">
+                            <div class="row  ">
+                                <div class="col-lg-12 justify-content-center pt-0  order-2 order-lg-1 " data-aos="fade-up ">
+                                    <h2>Treatment:</h2>
+                                    <hr>
+
+
+                                    <p><b>Asymptomatic cases, mild cases of COVID-19:</b><br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Monitor temperature daily.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Monitor oxygen saturation with a pulse oximeter daily.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Wear a mask when physical distancing is not possible.<br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Don’t share personal items with other people in the household.<br>
+
+                                    </p>
+                                    <p><b>Instructions for caregivers:</b><br>
+
+                                        <img src="assets/img/ring.png" width="5px"> Mask: The caregiver should wear a triple layer medical mask. N95 mask may be considered when in the same room with the ill person.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Hand hygiene: Hand hygiene must be ensured following contact with ill person or patient’s immediate environment.<br>
+                                        <img src="assets/img/ring.png" width="5px"> Exposure to patient/patient’s environment: Avoid direct contact with body fluids of the patient, particularly oral or respiratory secretions. Use disposable gloves while
+                                        handling the patient. Perform hand hygiene before and after removing gloves.<br>
+
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+        </section>
+        <!-- End Pricing Section -->
+        <!-- ======= Cta Section ======= -->
+        <section id="cta " class="cta ">
+            <div class="container " data-aos="zoom-in ">
+
+                <div class="row ">
+                    <div class="col-lg-9 text-center text-lg-start ">
+                        <h3>Are You Vaccinated???</h3>
+                        <p>
+                            The COVID-19 vaccines produce protection against the disease, as a result of developing an immune response to the SARS-Cov-2 virus. Developing immunity through vaccination means there is a reduced risk of developing the illness and its consequences. This
+                            immunity helps you fight the virus if exposed. Getting vaccinated may also protect people around you, because if you are protected from getting infected and from disease, you are less likely to infect someone else. This is
+                            particularly important to protect people at increased risk for severe illness from COVID-19, such as healthcare providers, older or elderly adults, and people with other medical conditions.</p>
+                    </div>
+                    <div class="col-lg cta-btn-container text-center ">
+                        <a class="cta-btn align-middle " href="https://www.who.int/news-room/q-a-detail/coronavirus-disease-(covid-19)-vaccines?adgroupsurvey={adgroupsurvey}&gclid=CjwKCAjwoNuGBhA8EiwAFxomA7Krj-XMW05jEJq0o0GCXPX4oNjbwEbaLpoV6USSriwUZB75FrZJxxoCEREQAvD_BwE ">Read More</a>
+                        <a class="cta-btn align-middle " href="https://www.cowin.gov.in/home">Fix Your Vaccination</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End Cta Section -->
+
+
+
+        <!-- ======= Frequently Asked Questions Section ======= -->
+        <section id="faq" class="faq section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                    <h3>
+                        <p>We have answers to your most pressing questions</p>
+                    </h3>
+                </div>
+
+                <div class="faq-list">
+                    <ul>
+                        <li data-aos="fade-up" data-aos-delay="100">
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">Can I trust my tap water? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                                <p>
+                                    Sure. Unless you're on a private well, tap water comes from municipal treatment plants that are carefully monitored and better regulated than bottled water.Very strict federal rules now require extensive filtering of the water supply, but minuscule amounts
+                                    of chemicals and pharmaceuticals may still turn up. If you want to ensure you're drinking the purest water possible, consider adding a filter or RO purifiers to your tap.
+
+                                </p>
+                            </div>
+                        </li>
+
+                        <li data-aos="fade-up" data-aos-delay="200">
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Is a Daily Glass of Wine Healthy? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                                <p>
+                                    Not for everyone. Small amounts of alcohol may stave off heart disease, and lower the odds of stroke and diabetes, too. But heavy drinking ups your chances for liver and heart damage, plus breast, colon, and other cancers. If you don’t drink, don’t start.
+                                    If you do, limit yourself to one drink a day if you’re a woman, or two if you’re a man.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li data-aos="fade-up" data-aos-delay="300">
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed"> Will staring at a computer all day damage my eyes? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                                <p>
+                                    No. A marathon computer session is like a long hike. "If you walk long enough, your legs will be tired, but that doesn't mean you've permanently damaged them," says ophthalmologist John C. Hagan III, MD, a spokesperson for the American Academy of Ophthalmology.
+                                    Focusing on a computer screen—a fixed distance—will leave your eye muscles tired and stiff, he says, plus you tend to blink less. The antidote: Look up from the computer screen every so often and focus on something
+                                    20 or more feet away, then blink briskly four or five times.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li data-aos="fade-up" data-aos-delay="400">
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Are the new birth control pills that eliminate your periods really safe? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                                <p>
+                                    Yes. There's no evidence that suppressing your period is dangerous. The periods you get on the regular Pill aren't real anyway, because the hormones prevent your uterus from building up the thick lining that's normally shed during menstruation. One reason
+                                    the Pill's inventors included the off week was to mimic the normal menstrual cycle in the hope that the Pope might bless the Pill. Needless to say, he didn't.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li data-aos="fade-up" data-aos-delay="500">
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed"> Do I really need to lift weights? Isn't yoga enough? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+                                <p>
+                                    Yoga can build muscle, exercise physiologists say, as long as your muscles burn a little; poses like downward dog require you to lift and shift your own body weight. It's less clear whether yoga can build or maintain bone density—a benefit weight lifting
+                                    confers—simply because it hasn't been studied. If your current yoga sessions don't feel challenging, or if your bones are thinning, consider adding strength training to the weight-bearing exercise (walking, for example)
+                                    that you're already doing for your bones. (You are already doing it, right?)
+                                </p>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+        <!-- End Frequently Asked Questions Section -->
+
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact ">
+            <div class="container " data-aos="fade-up ">
+
+                <div class="section-title ">
+                    <h2>Contact us and Suggestions</h2>
+                    <p>Feel Free to contact us on any relevant information and also if you want to post some information ,Your article may help the world to know the important day to day solutions related to health</p>
+                </div>
+
+                <div class="row ">
+
+
+
+                    <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch ">
+                        <form class="php-email-form ">
+                            <div class="row ">
+                                <div class="form-group col-md-6 ">
+                                    <label for="name ">Your Name</label>
+                                    <input type="text " name="name " class="form-control " id="name " required>
+                                </div>
+                                <div class="form-group col-md-6 ">
+                                    <label for="name ">Your Email</label>
+                                    <input type="email " class="form-control " name="email " id="email " required>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <label for="name ">Subject</label>
+                                <input type="text " class="form-control " name="subject " id="subject " required>
+                            </div>
+                            <div class="form-group ">
+                                <label for="name ">Message</label>
+                                <textarea class="form-control " name="message " rows="10 " required></textarea>
+                            </div>
+                            <div class="my-3 ">
+                                <div class="loading ">Loading</div>
+                                <div class="error-message "></div>
+                                <div class="sent-message ">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center "><button type="submit">Send Message</button></div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        <!-- End Contact Section -->
+
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <h3 class="logo me-auto">MEd|PEDIA</h3>
+            <h4>Routine Healthcare Guide,Now In your Desktop</h4>
+            <p>Follow us on:</p>
+            <div class="social-links">
+                <a href="https://t.me/joinchat/5OYnwTx9E0U1Y2Rl" class="twitter"><i class="bx bxl-telegram"></i></a>
+                <a href="https://www.facebook.com/dev.kumarseth.52" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/ck_0526_/" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="https://github.com/cosmoKnight333" class="google-plus"><i class="bx bxl-github"></i></a>
+                <a href="https://www.linkedin.com/in/dev-kumar-seth-9b9b4919a/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+            <div class="copyright">
+                &copy; Copyright <strong><span>MEdPedia</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- End Footer -->
+
+    <!-- End Footer -->
+
+    <div id="preloader "></div>
+    <a href="# " class="back-to-top d-flex align-items-center justify-content-center "><i class="bi bi-arrow-up-short "></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/aos/aos.js "></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js "></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js "></script>
+    <script src="assets/vendor/php-email-form/validate.js "></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js "></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js "></script>
+
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js "></script>
+
+</body>
+
+</html>
