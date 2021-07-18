@@ -8,6 +8,7 @@ let upload = multer({ dest: __dirname + '/public/blogpage-assets/img/' });
 let mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
+// mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
