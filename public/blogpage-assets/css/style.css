@@ -818,3 +818,20 @@ a:hover figcaption {
         max-width: 120px;
     }
 }
+
+.far {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.far:hover {
+    font-size: 25px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.far:active {
+    font-size: 25px;
+    color: rgb(75, 108, 199);
+}

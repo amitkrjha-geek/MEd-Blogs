@@ -1,12 +1,12 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const ejs = require('ejs');
-const _ = require('lodash');
-const multer = require('multer');;
-const app = express();
-const upload = multer({ dest: __dirname + '/blogpage-assets/public/img' });
-const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+let express = require('express');
+let bodyParser = require('body-parser');
+let ejs = require('ejs');
+let _ = require('lodash');
+let multer = require('multer');;
+let app = express();
+let upload = multer({ dest: __dirname + '/public/blogpage-assets/img/' });
+let mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 app.set('view engine', 'ejs');
@@ -15,11 +15,11 @@ app.use(express.static("public"))
 
 //let blogPosts = []; //array containing posts
 //let contacts = []; //array containing contacts
-const title = "MEd Blogs";
+let title = "MEd Blogs";
 
 
 
-const blogPostsSchema = {
+let blogPostsSchema = {
     author: String,
     heading: String,
     email: String,
@@ -27,12 +27,14 @@ const blogPostsSchema = {
     date: String,
     message: String,
     comments: [],
-    img: String //img is imagename
+    img: String, //img is imagename
+    likes: Number,
+    dislikes: Number,
 }
-const BlogPost = mongoose.model('BlogPost', blogPostsSchema);
+let BlogPost = mongoose.model('BlogPost', blogPostsSchema);
 
 
-const contactsSchema = {
+let contactsSchema = {
     name: String,
     email: String,
     subject: String,
@@ -40,16 +42,16 @@ const contactsSchema = {
     date: {},
     //img is imagename
 }
-const Contact = mongoose.model('Contact', contactsSchema);
+let Contact = mongoose.model('Contact', contactsSchema);
 
-const mainContactsSchema = {
+let mainContactsSchema = {
     name: String,
     email: String,
     subject: String,
     msg: String,
     date: {},
 }
-const MainContact = mongoose.model('MainContact', mainContactsSchema);
+let MainContact = mongoose.model('MainContact', mainContactsSchema);
 
 app.set('view engine', 'ejs');
 
@@ -74,17 +76,18 @@ app.post('/', function(req, res) {
 
     })
     contact.save();
-    Contact.find({}, function(err, contact) {
-        console.log(contact);
-    })
+    console.log(contact);
     res.redirect("/");
 })
 
 
 app.get("/blog-home", function(req, res) {
+
+
     BlogPost.find({}, function(err, blogPosts) {
         res.render("blog-index", { blogPosts: blogPosts });
     })
+
 })
 
 //..................contact route begin........................
@@ -124,7 +127,7 @@ app.post("/compose", upload.single('photo'), function(req, res) {
         var day = today.toLocaleDateString("en-US", options);
         if (req.file) {
             console.log(req.file.filename);
-            const blogPost = new BlogPost({
+            let blogPost = new BlogPost({
                 author: req.body.bName,
                 heading: req.body.bHeading,
                 email: req.body.bEmail,
@@ -132,7 +135,10 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                 date: day,
                 message: req.body.bMsg,
                 comments: [],
-                img: req.file.filename //img is imagename
+                img: req.file.filename, //img is imagename
+                likes: 0,
+                dislikes: 0,
+
             });
             blogPost.save();
             res.redirect("/");
@@ -151,7 +157,7 @@ app.get("/header", function(req, res) {
 //....................dynamic post route.............................
 
 app.get("/singlepost/:postName", function(req, res) {
-    const reqTitlle = (req.params.postName);
+    let reqTitlle = (req.params.postName);
     BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
         res.render("singlepost", { post: post });
 
@@ -161,7 +167,7 @@ app.get("/singlepost/:postName", function(req, res) {
 })
 
 app.post("/singlepost/:postName", function(req, res) {
-    const reqTitlle = (req.params.postName);
+    let reqTitlle = (req.params.postName);
     BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
 
         if ((post.heading) === reqTitlle) {
@@ -189,10 +195,58 @@ app.post("/singlepost/:postName", function(req, res) {
 app.get('/about', function(req, res) {
     res.render('about');
 })
+app.get('/tagsshow', function(req, res) {
+    res.render('tagsshow');
+})
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 3000;
 }
+
+
+
+
+app.post('/likePost', function(req, res) {
+    console.log(req.body.btn);
+    BlogPost.findOne({ heading: req.body.btn }, function(err, post) {
+        if (err) {
+            console.log(err);
+        } else {
+            post.likes = post.likes + 1;
+            post.save();
+            console.log("likes : " + post.likes);
+        }
+    })
+    res.redirect('/blog-home');
+})
+
+app.post('/dislikePost', function(req, res) {
+    console.log(req.body.btn);
+    BlogPost.findOne({ heading: req.body.btn }, function(err, post) {
+        if (err) {
+            console.log(err);
+        } else {
+            post.dislikes = post.dislikes + 1;
+            post.save();
+            console.log("dislikes : " + post.dislikes);
+        }
+    })
+    res.redirect('#');
+})
+
+// app.post('/dislikeComment', function(req, res) {
+//     console.log(req.body.btn);
+//     BlogPost.findOne({ comments.cMsg: req.body.btn }, function(err, post) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             post.dislikes = post.dislikes + 1;
+//             post.save();
+//             console.log("dislikes : " + post.dislikes);
+//         }
+//     })
+//     res.redirect('#');
+// })
 
 
 app.listen(port, function() {

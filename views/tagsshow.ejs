@@ -54,15 +54,8 @@
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between">
-                                    <span>by <%= post.author %></span>
-
-                                    <span><form action="/likePost" method="post"><button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up" ></i> <%= post.likes %></button></form></span>
-                                    <span><form action="/dislikePost" method="post"><button type="submit" class="btn btn-transparent" name="btn"  value="<%= post.heading%>"><i class="far fa-thumbs-down" ></i> <%= post.dislikes %></button></form></span>
-
-
                                     <span><%= post.comments.length %> Comments</span>
-
-
+                                    <span>by <%= post.author %></span>
                                 </div>
                             </article>
                         </a>

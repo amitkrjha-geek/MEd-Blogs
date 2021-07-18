@@ -26,10 +26,21 @@
                             <h2 class="pt-2 tm-color-primary tm-post-title">
                                 <%= post.heading%>
                             </h2>
-                            <p class="tm-mb-40">
-                                <%= post.date %>, by
-                                    <%= post.author %>
-                            </p>
+                            <div class="tm-mb-40 d-flex justify-content-between">
+                                <div class="display:inline-block">
+                                    <%= post.date %>, by
+                                        <%= post.author %>
+                                </div>
+                                <form action="/likePost" method="post" style="display:inline-block">
+                                    <button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up"></i>
+                                        <%= post.likes %>
+                                            </button>
+                                </form>
+                                <form action="/dislikePost" method="post" style="display:inline-block">
+                                    <button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-down" ></i> <%= post.dislikes %></button>
+                                </form>
+
+                            </div>
                             <p style="white-space: pre-wrap;">
                                 <%= post.message %>
                             </p>
@@ -46,7 +57,14 @@
                                     <figure class="tm-comment-figure">
                                         <!-- <img src="img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail"> -->
                                         <figcaption class="tm-color-primary text-center">
-                                            <%=comment.cAuthor%>
+                                            <%=comment.cAuthor%><br>
+                                                <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-up"></i>
+                                        <%= post.likes %>
+                                            </button>
+                                                <br>
+                                                <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-down"></i>
+                                        <%= post.likes %>
+                                            </button>
                                         </figcaption>
                                     </figure>
                                     <div>
