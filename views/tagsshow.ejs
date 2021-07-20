@@ -1,14 +1,18 @@
 <%- include('partials/header') -%>
 
     <div class="container-fluid">
-        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Routine Healthcare Articles,</h1>
+        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Yor Results for,</h1>
 
-        <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center ">Now in your Desktop.......</h1>
+        <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center">
+
+            #
+            <%=tagName%> Tag is here:
+        </h1>
         <main class="tm-main">
             <!-- Search form -->
             <div class="row tm-row">
                 <div class="col-12">
-                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">
+                    <form method="post" class="form-inline tm-mb-80 tm-search-form" action="/searchTag">
                         <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
                         <button class="tm-search-button" type="submit">
                             <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>

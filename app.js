@@ -6,9 +6,10 @@ let multer = require('multer');;
 let app = express();
 let upload = multer({ dest: __dirname + '/public/blogpage-assets/img/' });
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+const { post } = require('request');
+//mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,7 +18,6 @@ app.use(express.static("public"))
 //let blogPosts = []; //array containing posts
 //let contacts = []; //array containing contacts
 let title = "MEd Blogs";
-
 
 
 let blogPostsSchema = {
@@ -31,9 +31,39 @@ let blogPostsSchema = {
     img: String, //img is imagename
     likes: Number,
     dislikes: Number,
+    time: Number
 }
 let BlogPost = mongoose.model('BlogPost', blogPostsSchema);
 
+let commentsSchema = {
+    cAuthor: String,
+    cEmail: String,
+    cDate: String,
+    cMsg: String,
+    clikes: Number,
+    cdislikes: Number,
+}
+let Comment = mongoose.model('Comment', commentsSchema);
+
+const taggedPostSchema = {
+    tagName: String,
+    posts: Array
+}
+let TaggedPost = mongoose.model('TaggedPost', taggedPostSchema);
+
+function displayTags() {
+    TaggedPost.find({}, function(err, tags) {
+        tags.forEach(function(tag) {
+            if (!err) {
+                console.log("   " + tag.tagName);
+                for (let i = 0; i < tag.posts.length; i++) {
+                    console.log("-->>" + tag.posts[i]);
+                }
+            }
+        })
+
+    })
+}
 
 let contactsSchema = {
     name: String,
@@ -85,13 +115,12 @@ app.post('/', function(req, res) {
 app.get("/blog-home", function(req, res) {
 
 
-    BlogPost.find({}, function(err, blogPosts) {
-        res.render("blog-index", { blogPosts: blogPosts });
+        BlogPost.find({}, function(err, blogPosts) {
+            res.render("blog-index", { blogPosts: blogPosts });
+        })
+
     })
-
-})
-
-//..................contact route begin........................
+    //..................contact route begin........................
 app.get("/contact", function(req, res) {
     res.render("contact");
 })
@@ -125,24 +154,46 @@ app.post("/compose", upload.single('photo'), function(req, res) {
             month: "long",
             year: "numeric",
         };
+        let rtags = (req.body.bTags).split(" ");
+        for (let i = 0; i < rtags.length; i++) {
+            rtags[i] = _.lowerCase(rtags[i]);
+        }
         var day = today.toLocaleDateString("en-US", options);
         if (req.file) {
             console.log(req.file.filename);
             let blogPost = new BlogPost({
-                author: req.body.bName,
-                heading: req.body.bHeading,
+                author: _.capitalize(req.body.bName),
+                heading: _.capitalize(req.body.bHeading),
                 email: req.body.bEmail,
-                tags: (req.body.bTags).split(" "),
+                tags: rtags,
                 date: day,
                 message: req.body.bMsg,
                 comments: [],
                 img: req.file.filename, //img is imagename
                 likes: 0,
                 dislikes: 0,
+                time: today.getTime() / 1000,
 
             });
+
+            blogPost.tags.forEach(function(tag) {
+                TaggedPost.find({}, function(err, tagposts) { //taggpost is array of objects
+                    tagposts.forEach(function(tagpost) {
+                        if (tagpost.tagName === tag) {
+                            tagpost.posts.push(blogPost);
+                            tagpost.save();
+                        }
+                    })
+                })
+                let taggedpost = new TaggedPost({
+                    tagName: tag,
+                    posts: []
+                })
+                taggedpost.posts.push(blogPost);
+                taggedpost.save();
+            })
             blogPost.save();
-            res.redirect("/");
+            res.redirect("/blog-home");
         } else throw 'error';
     })
     //....................compose route ends.............................
@@ -171,24 +222,33 @@ app.post("/singlepost/:postName", function(req, res) {
     let reqTitlle = (req.params.postName);
     BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
 
-        if ((post.heading) === reqTitlle) {
-            var today = new Date();
-            let options = {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            };
-            var day = today.toLocaleDateString("en-US", options);
-            post.comments.push({
-                cAuthor: req.body.name,
-                cEmail: req.body.email,
-                cDate: day,
-                cMsg: req.body.message,
-            });
-            post.save();
+        var today = new Date();
+        let options = {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        };
+        var day = today.toLocaleDateString("en-US", options);
 
-            res.redirect("#");
-        }
+        let comment = new Comment({
+            cAuthor: req.body.name,
+            cEmail: req.body.email,
+            cDate: day,
+            cMsg: req.body.message,
+            clikes: 0,
+            cdislikes: 0
+        });
+        comment.save();
+        post.comments.push(comment);
+        console.log(comment);
+        post.save();
+
+
+
+
+
+
+        res.redirect("/");
 
 
     });
@@ -196,13 +256,6 @@ app.post("/singlepost/:postName", function(req, res) {
 app.get('/about', function(req, res) {
     res.render('about');
 })
-app.get('/tagsshow', function(req, res) {
-    res.render('tagsshow');
-})
-let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 3000;
-}
 
 
 
@@ -218,6 +271,7 @@ app.post('/likePost', function(req, res) {
             console.log("likes : " + post.likes);
         }
     })
+    console.log("liked");
     res.redirect('/blog-home');
 })
 
@@ -232,24 +286,45 @@ app.post('/dislikePost', function(req, res) {
             console.log("dislikes : " + post.dislikes);
         }
     })
-    res.redirect('#');
+    res.redirect('/blog-home');
 })
 
-// app.post('/dislikeComment', function(req, res) {
-//     console.log(req.body.btn);
-//     BlogPost.findOne({ comments.cMsg: req.body.btn }, function(err, post) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             post.dislikes = post.dislikes + 1;
-//             post.save();
-//             console.log("dislikes : " + post.dislikes);
-//         }
-//     })
-//     res.redirect('#');
-// })
 
+
+app.post('/searchTag', function(req, res) {
+    let stagName = _.lowerCase(req.body.query);
+    console.log(stagName);
+    res.redirect('/tagsshow/' + stagName);
+})
+
+app.get('/tagsshow/:tag', function(req, res) {
+    let reqTag = req.params.tag;
+    TaggedPost.findOne({ tagName: reqTag }, function(err, tag) {
+        console.log(tag.posts);
+        res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName });
+    })
+
+})
+
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
 
 app.listen(port, function() {
+
     console.log("server started Successfully");
 })
+
+
+
+
+
+
+
+
+
+
+
+
+//tag

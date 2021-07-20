@@ -8,7 +8,7 @@
             <!-- Search form -->
             <div class="row tm-row">
                 <div class="col-12">
-                    <form method="GET" class="form-inline tm-mb-80 tm-search-form">
+                    <form method="post" class="form-inline tm-mb-80 tm-search-form" action="/searchTag">
                         <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
                         <button class="tm-search-button" type="submit">
                             <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
@@ -32,7 +32,11 @@
                                     <div class=" tm-post-link-inner">
                                         <img src="/blogpage-assets/img/<%=post.img%>" alt="Image" height="300px" width="200px">
                                     </div>
-                                    <span class="position-absolute tm-new-badge">New</span>
+                                    <% let ndate=new Date();%>
+                                        <% ntime=ndate.getTime()/1000;%>
+                                            <%if (ntime-post.time<604800){%>
+                                                <span class="position-absolute tm-new-badge">New</span>
+                                                <% } %>
                                 </a>
                                 <p class="tm-pt-30">
 
@@ -44,7 +48,7 @@
                                 <div class="d-flex justify-content-between tm-pt-45">
                                     <span class="tm-color-primary">
                                 <% post.tags.forEach(function(tag){ %>
-                                    #<%= tag %> &nbsp;
+                                   <a href="/tagsshow/<%=tag%>" style="color:rgb(28, 74, 133); "> #<%= tag %></a> &nbsp;
                                 <%  })%>
                                 
                                 
