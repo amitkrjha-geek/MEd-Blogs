@@ -414,6 +414,7 @@
      height: 80vh;
      background-image: url("../img/bg-banner.jpg");
      background-repeat: no-repeat;
+     background-size: auto;
  }
  
  #hero .container {
@@ -493,6 +494,9 @@
      #hero .hero-img img {
          width: 50%;
      }
+     #hero {
+         background-size: 100% 100%;
+     }
  }
  
  @media (max-width: 768px) {
@@ -507,9 +511,6 @@
      }
      #hero .hero-img img {
          width: 70%;
-     }
-     #hero {
-         background-size: auto 100%;
      }
  }
  
