@@ -625,6 +625,15 @@ a:hover figcaption {
     display: flex;
 }
 
+.compose {
+    width: 70%;
+    transform: translateX(140px);
+}
+
+.compose-form {
+    width: 100%;
+}
+
 @media (max-width: 1540px) {
     .tm-header {
         width: 320px;
@@ -655,6 +664,13 @@ a:hover figcaption {
     }
     .form-inline .form-control.tm-search-input {
         width: 420px;
+    }
+    .compose {
+        width: 100%;
+        transform: translateX(-20px);
+    }
+    .compose-form {
+        width: 100%;
     }
 }
 
@@ -767,6 +783,13 @@ a:hover figcaption {
     .tm-post-sidebar {
         margin-left: 0;
         margin-right: auto;
+    }
+    .compose {
+        width: 70%;
+        transform: translateX(150px);
+    }
+    .compose-form {
+        width: 100%;
     }
 }
 

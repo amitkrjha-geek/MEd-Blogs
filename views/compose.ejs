@@ -1,10 +1,10 @@
 <%- include('partials/header') -%>
 
-    <div class="container  justify-content-center align-items-center">
+    <div class="container compose justify-content-center align-items-center">
         <div class="col-12 pt-5 pb-5 pr-5 mt-5 mr-5 mb-5 ">
             <h2 class="tm-color-primary tm-post-title tm-mb-60">Compose Your Blog</h2>
             <hr>
-            <form method="post" action="/compose" class="p-5" enctype="multipart/form-data">
+            <form method="post" action="/compose" class="compose-form" enctype="multipart/form-data">
                 <h3>Drop Us a Message</h3>
                 <div class="row">
                     <div class="col-md-6">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <textarea name="bMsg" class="form-control" placeholder="Your Message *" style="width: 100%; height: 230px; required"></textarea>
+                            <textarea name="bMsg" class="form-control" placeholder="Your Message *" style="width: 100%; height: 230px; " required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
