@@ -1,7 +1,7 @@
 <%- include('partials/header') -%>
 
     <div class="container-fluid">
-        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Yor Results for,</h1>
+        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Your Results for,</h1>
 
         <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center">
 
@@ -13,7 +13,7 @@
             <div class="row tm-row">
                 <div class="col-12">
                     <form method="post" class="form-inline tm-mb-80 tm-search-form" action="/searchTag">
-                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search..." aria-label="Search">
+                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search TAG..." aria-label="Search">
                         <button class="tm-search-button" type="submit">
                             <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
                         </button>
@@ -58,8 +58,12 @@
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between">
-                                    <span><%= post.comments.length %> Comments</span>
                                     <span>by <%= post.author %></span>
+
+                                    <span><form action="/likePost" method="post"><button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up" ></i> <%= post.likes %></button></form></span>
+                                    <span><form action="/dislikePost" method="post"><button type="submit" class="btn btn-transparent" name="btn"  value="<%= post.heading%>"><i class="far fa-thumbs-down" ></i> <%= post.dislikes %></button></form></span>
+                                    <span><%= post.comments.length %> Comments</span>
+
                                 </div>
                             </article>
                         </a>
