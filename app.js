@@ -290,7 +290,15 @@ app.post('/dislikePost', function(req, res) {
 })
 
 
+app.get('/tagnotfound', function(req, res) {
 
+    res.render("tagnotfound");
+
+})
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
 app.post('/searchTag', function(req, res) {
     let stagName = _.lowerCase(req.body.query);
     console.log(stagName);
@@ -303,13 +311,10 @@ app.get('/tagsshow/:tag', function(req, res) {
         console.log(tag.posts);
         res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName });
     })
+    res.redirect('/tagnotfound');
 
 })
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 3000;
-}
 
 app.listen(port, function() {
 
