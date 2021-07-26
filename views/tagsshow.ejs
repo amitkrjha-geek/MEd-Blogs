@@ -48,6 +48,7 @@
                                 <div class="d-flex justify-content-between tm-pt-45">
                                     <span class="tm-color-primary">
                                 <% post.tags.forEach(function(tag){ %>
+                                    <a href="/tagsshow/<%=tag%>"></a>
                                     #<%= tag %> &nbsp;
                                 <%  })%>
                                 
