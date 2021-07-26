@@ -29,7 +29,9 @@
                             <div class="tm-mb-40 d-flex justify-content-between">
                                 <div class="display:inline-block">
                                     <%= post.date %>, by
-                                        <%= post.author %>
+                                        <a href="<%=post.email%>" style="color:#37517e">
+                                            <%= post.author %>
+                                        </a>
                                 </div>
                                 <form action="/likePost" method="post" style="display:inline-block">
                                     <button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up"></i>
@@ -60,12 +62,14 @@
                                     <figure class="tm-comment-figure">
                                         <!-- <img src="img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail"> -->
                                         <figcaption class="tm-color-primary text-center">
-                                            <%=comment.cAuthor%><br>
-                                                <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-up"></i>
+                                            <a href="<%=comment.cEmail%>" style="color:#37517e">
+                                                <%=comment.cAuthor%>
+                                            </a><br>
+                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-up"></i>
                                         <%= post.likes %>
                                             </button>
-                                                <br>
-                                                <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-down"></i>
+                                            <br>
+                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-down"></i>
                                         <%= post.likes %>
                                             </button>
                                         </figcaption>
@@ -89,7 +93,7 @@
                                             <input class="form-control" placeholder="Name *" name="name" type="text">
                                         </div>
                                         <div class="mb-4">
-                                            <input class="form-control" placeholder="Email *" name="email" type="text">
+                                            <input class="form-control" placeholder="Facebook profile link *" name="email" type="text">
                                         </div>
                                         <div class="mb-4">
                                             <textarea class="form-control" placeholder=" Message *" name="message" rows="6"></textarea>

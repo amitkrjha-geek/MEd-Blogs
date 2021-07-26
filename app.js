@@ -7,17 +7,24 @@ let app = express();
 let upload = multer({ dest: __dirname + '/public/blogpage-assets/img/' });
 let mongoose = require('mongoose');
 const { post } = require('request');
-//mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"))
-
-//let blogPosts = []; //array containing posts
-//let contacts = []; //array containing contacts
+    //let blogPosts = []; //array containing posts
+    //let contacts = []; //array containing contacts
 let title = "MEd Blogs";
+let userSchema = {
+    userName: String,
+    email: String,
+    posts: Array,
+}
+let User = mongoose.model('User', userSchema);
+
+
 
 
 let blogPostsSchema = {
@@ -34,6 +41,8 @@ let blogPostsSchema = {
     time: Number
 }
 let BlogPost = mongoose.model('BlogPost', blogPostsSchema);
+
+
 
 let commentsSchema = {
     cAuthor: String,
@@ -121,6 +130,11 @@ app.get("/blog-home", function(req, res) {
 
     })
     //..................contact route begin........................
+app.get('/msgsend', function(req, res) {
+    res.render('msgsend');
+})
+
+
 app.get("/contact", function(req, res) {
     res.render("contact");
 })
@@ -138,7 +152,7 @@ app.post("/contact", function(req, res) {
         Contact.find({}, function(err, contact) {
             console.log(contact);
         })
-        res.redirect("#");
+        res.redirect("/msgsend");
     })
     //...................contact route end..........................
 
@@ -146,6 +160,9 @@ app.post("/contact", function(req, res) {
 //......................compose route begin......................
 app.get("/compose", function(req, res) {
     res.render("compose");
+})
+app.get("/blogadded", function(req, res) {
+    res.render("blogadded");
 })
 app.post("/compose", upload.single('photo'), function(req, res) {
         var today = new Date();
@@ -193,7 +210,24 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                 taggedpost.save();
             })
             blogPost.save();
-            res.redirect("/blog-home");
+            User.findOne({ userName: _.lowerCase(req.body.bName) }, function(user, err) {
+                if (err) {
+                    console.log(err);
+                } else if (user !== null) {
+                    user.posts.push(blogPost);
+                    user.save();
+                } else {
+                    let newUser = new User({
+                        userName: _.lowerCase(req.body.bName),
+                        email: req.body.bEmail,
+                        posts: []
+                    })
+                    newUser.posts.push(blogPost);
+                    newUser.save();
+                }
+            })
+
+            res.redirect("/blogadded");
         } else throw 'error';
     })
     //....................compose route ends.............................
@@ -242,8 +276,6 @@ app.post("/singlepost/:postName", function(req, res) {
         post.comments.push(comment);
         console.log(comment);
         post.save();
-
-
         res.redirect("/");
 
 
@@ -320,10 +352,19 @@ app.get('/tagsshow/:tag', function(req, res) {
         }
     })
 })
+app.get('/userposts/:username', function(req, res) {
+    let username = _.lowerCase(req.params.username);
+    User.findOne({ userName: username }, function(err, user) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('userposts', { blogPosts: user.posts, userName: user.userName, email: user.email });
 
+        }
+    })
+})
 
 app.listen(port, function() {
-
     console.log("server started Successfully");
 })
 

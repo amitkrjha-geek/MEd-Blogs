@@ -1,21 +1,24 @@
 <%- include('partials/header') -%>
 
     <div class="container-fluid">
-        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Routine Healthcare Articles,</h1>
+        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Blogs Posted By</h1>
 
-        <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center ">Now in your Desktop.......</h1>
+        <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center">
+
+            <%let text =userName; %>
+                <%text = text.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');%>
+                    <%=text%> are here:<br>
+                        <a href="<%=email%>">
+                        <button class="tm-btn tm-btn-primary tm-btn-large btn-lg ml-3 mt-3 p-3" href="<%=email%>"> 
+                    <i class="fab fa-facebook pr-2"></i>
+                            View Facebook Profile</button>
+</a>
+
+        </h1>
+
         <main class="tm-main">
             <!-- Search form -->
-            <div class="row tm-row">
-                <div class="col-12">
-                    <form method="post" class="form-inline tm-mb-80 tm-search-form" action="/searchTag">
-                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search TAG..." aria-label="Search">
-                        <button class="tm-search-button" type="submit">
-                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
+
             <div class="row tm-row d-flex justify-content-center align-item-center">
 
 
@@ -32,11 +35,7 @@
                                     <div class=" tm-post-link-inner">
                                         <img src="/blogpage-assets/img/<%=post.img%>" alt="Image" height="300px" width="200px">
                                     </div>
-                                    <% let ndate=new Date();%>
-                                        <% ntime=ndate.getTime()/1000;%>
-                                            <%if (ntime-post.time<604800){%>
-                                                <span class="position-absolute tm-new-badge">New</span>
-                                                <% } %>
+                                    <span class="position-absolute tm-new-badge">New</span>
                                 </a>
                                 <p class="tm-pt-30">
 
@@ -48,7 +47,8 @@
                                 <div class="d-flex justify-content-between tm-pt-45">
                                     <span class="tm-color-primary">
                                 <% post.tags.forEach(function(tag){ %>
-                                   <a href="/tagsshow/<%=tag%>" style="color:rgb(28, 74, 133); "> #<%= tag %></a> &nbsp;
+                                    <a href="/tagsshow/<%=tag%>" style="color:rgb(28, 74, 133)" >
+                                    #<%= tag %></a> &nbsp;
                                 <%  })%>
                                 
                                 
@@ -58,15 +58,12 @@
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between">
-                                    <span>by  <a href="/userposts/<%=post.author%>" style="color:rgb(28, 74, 133)"> <%= post.author %></a></span>
+                                    <span>by <a href="<%=post.email%>" style="color:rgb(28, 74, 133)">
+                                         <%= post.author %></a></span>
 
                                     <span><form action="/likePost" method="post"><button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up" ></i> <%= post.likes %></button></form></span>
                                     <span><form action="/dislikePost" method="post"><button type="submit" class="btn btn-transparent" name="btn"  value="<%= post.heading%>"><i class="far fa-thumbs-down" ></i> <%= post.dislikes %></button></form></span>
-
-
                                     <span><%= post.comments.length %> Comments</span>
-
-
                                 </div>
                             </article>
                         </a>
