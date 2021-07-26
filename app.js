@@ -244,10 +244,6 @@ app.post("/singlepost/:postName", function(req, res) {
         post.save();
 
 
-
-
-
-
         res.redirect("/");
 
 
@@ -291,7 +287,6 @@ app.post('/dislikePost', function(req, res) {
 
 
 app.get('/tagnotfound', function(req, res) {
-
     res.render("tagnotfound");
 
 })
@@ -301,18 +296,29 @@ if (port == null || port == "") {
 }
 app.post('/searchTag', function(req, res) {
     let stagName = _.lowerCase(req.body.query);
-    console.log(stagName);
+
     res.redirect('/tagsshow/' + stagName);
+
+
 })
 
 app.get('/tagsshow/:tag', function(req, res) {
     let reqTag = req.params.tag;
-    TaggedPost.findOne({ tagName: reqTag }, function(err, tag) {
-        console.log(tag.posts);
-        res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName });
-    })
-    res.redirect('/tagnotfound');
+    var lfound = 0;
 
+    TaggedPost.findOne({ tagName: reqTag }, function(err, tag) {
+        if (err) {
+            console.log(lfound);
+            res.redirect('/tagnotfound');
+        } else if (tag !== null) {
+
+            lfound = 1;
+            console.log(tag);
+            res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName });
+        } else if (tag === null) {
+            res.redirect('/tagnotfound');
+        }
+    })
 })
 
 
