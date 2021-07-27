@@ -538,6 +538,10 @@ p a {
     color: #37517e;
 }
 
+h1 a {
+    color: #37517e;
+}
+
 a:hover {
     text-decoration: none;
     color: #048c8c;
@@ -858,3 +862,6 @@ a:hover figcaption {
     font-size: 25px;
     color: rgb(75, 108, 199);
 }
+
+
+/*--------------------------login--------------------------- */

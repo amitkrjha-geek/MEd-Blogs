@@ -7,8 +7,8 @@ let app = express();
 let upload = multer({ dest: __dirname + '/public/blogpage-assets/img/' });
 let mongoose = require('mongoose');
 const { post } = require('request');
-//mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 app.set('view engine', 'ejs');
@@ -20,13 +20,11 @@ let title = "MEd Blogs";
 let userSchema = {
     userName: String,
     email: String,
+    clg: String,
+    fburl: String,
     posts: Array,
 }
 let User = mongoose.model('User', userSchema);
-
-
-
-
 let blogPostsSchema = {
     author: String,
     heading: String,
@@ -276,7 +274,7 @@ app.post("/singlepost/:postName", function(req, res) {
         post.comments.push(comment);
         console.log(comment);
         post.save();
-        res.redirect("/");
+        res.redirect("/blog-home");
 
 
     });
@@ -362,6 +360,12 @@ app.get('/userposts/:username', function(req, res) {
 
         }
     })
+})
+app.get('/login', function(req, res) {
+    res.render('login');
+})
+app.get('/register', function(req, res) {
+    res.render('register');
 })
 
 app.listen(port, function() {

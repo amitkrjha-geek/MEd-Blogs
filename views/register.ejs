@@ -1,0 +1,72 @@
+<%- include('partials/header') -%>
+
+    <div class="container-fluid mt-5 pt-5">
+
+        <main class="tm-main">
+            <!-- Search form -->
+
+            <div class="row tm-row d-flex justify-content-center align-item-center">
+
+                <div class="jumbotron" style="width: 100%; background:#fff;border:5px solid rgb(28, 74, 133); ">
+                    <p class="text-grey">Step: 2</p>
+
+                    <form method="post" action="/compose" class="compose-form" enctype="multipart/form-data">
+                        <h3>Your Info :</h3>
+                        <div class="row d-flex align-item-center justify-content-center">
+                            <div class="col">
+                                <div class="form-group">
+                                    <input type="text" name="bName" class="form-control" placeholder="Your Name *" value="" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="bHeading" class="form-control" placeholder="Your Email *" value="" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="bEmail" class="form-control" placeholder="Facebook Profile URL*" value="" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="bHeading" class="form-control" placeholder="Occupation *" value="" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="bTags" class="form-control" placeholder="Your Education Institution Name*" value="" required />
+                                </div>
+
+                                <div class="form-group text-center">
+                                    <button class="tm-btn tm-btn-primary tm-btn-small ml-3">Register</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <div class="row tm-row tm-mt-100 tm-mb-75">
+                <!-- <div class="tm-prev-next-wrapper">
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+                </div>
+                <div class="tm-paging-wrapper">
+                    <span class="d-inline-block mr-3">Page</span>
+                    <nav class="tm-paging-nav d-inline-block">
+                        <ul>
+                            <li class="tm-paging-item active">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
+                            </li>   
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> -->
+            </div>
+        </main>
+    </div>
+    <%- include('partials/footer') -%>

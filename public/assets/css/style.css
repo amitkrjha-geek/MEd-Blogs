@@ -794,6 +794,9 @@
          padding-left: 0;
          padding-right: 0;
      }
+     .body-img {
+         display: none;
+     }
  }
  
  @media (max-width: 992px) {
@@ -811,6 +814,9 @@
  @media (max-width: 575px) {
      .why-us .img {
          min-height: 200px;
+     }
+     .body-img {
+         display: none;
      }
  }
  /*--------------------------------------------------------------
