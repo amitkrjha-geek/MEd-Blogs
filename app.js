@@ -7,24 +7,38 @@ let app = express();
 let upload = multer({ dest: __dirname + '/public/blogpage-assets/img/' });
 let mongoose = require('mongoose');
 const { post } = require('request');
+const passport = require('passport')
+const facebookStrategy = require('passport-facebook').Strategy
+
+
 mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 //mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"))
-    //let blogPosts = []; //array containing posts
-    //let contacts = []; //array containing contacts
+app.use(express.static("public"));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//let blogPosts = []; //array containing posts
+//let contacts = []; //array containing contacts
 let title = "MEd Blogs";
+
+
+
+
+
+
+
 let userSchema = {
     userName: String,
     email: String,
     clg: String,
-    fburl: String,
+    fbUrl: String,
     posts: Array,
+    occ: String,
+    password: String,
 }
-let User = mongoose.model('User', userSchema);
 let blogPostsSchema = {
     author: String,
     heading: String,
@@ -38,9 +52,6 @@ let blogPostsSchema = {
     dislikes: Number,
     time: Number
 }
-let BlogPost = mongoose.model('BlogPost', blogPostsSchema);
-
-
 
 let commentsSchema = {
     cAuthor: String,
@@ -50,28 +61,10 @@ let commentsSchema = {
     clikes: Number,
     cdislikes: Number,
 }
-let Comment = mongoose.model('Comment', commentsSchema);
-
 const taggedPostSchema = {
     tagName: String,
     posts: Array
 }
-let TaggedPost = mongoose.model('TaggedPost', taggedPostSchema);
-
-function displayTags() {
-    TaggedPost.find({}, function(err, tags) {
-        tags.forEach(function(tag) {
-            if (!err) {
-                console.log("   " + tag.tagName);
-                for (let i = 0; i < tag.posts.length; i++) {
-                    console.log("-->>" + tag.posts[i]);
-                }
-            }
-        })
-
-    })
-}
-
 let contactsSchema = {
     name: String,
     email: String,
@@ -80,8 +73,6 @@ let contactsSchema = {
     date: {},
     //img is imagename
 }
-let Contact = mongoose.model('Contact', contactsSchema);
-
 let mainContactsSchema = {
     name: String,
     email: String,
@@ -89,12 +80,54 @@ let mainContactsSchema = {
     msg: String,
     date: {},
 }
+let User = mongoose.model('User', userSchema);
+let BlogPost = mongoose.model('BlogPost', blogPostsSchema);
+let Comment = mongoose.model('Comment', commentsSchema);
+let TaggedPost = mongoose.model('TaggedPost', taggedPostSchema);
+let Contact = mongoose.model('Contact', contactsSchema);
 let MainContact = mongoose.model('MainContact', mainContactsSchema);
 
-app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+
+
+
+
+
+passport.use(new facebookStrategy({
+
+        // pull in our app id and secret from our auth.js file
+        clientID: "242251471053853",
+        clientSecret: "6b7ea030fe77327a4d115b938970f296",
+        callbackURL: "http://localhost:3000/facebook/callback",
+        profileFields: ['id', 'displayName', , 'emails']
+
+    }, // facebook will send back the token and profile
+    function(token, refreshToken, profile, done) {
+        User.findOne({ email: profile.email }, function(err, user) {
+            if (user === null) {
+                let newUser = new User({
+                    userName: profile.displayName,
+                    email: profile.emails[0].value,
+                    clg: "",
+                    posts: [],
+                    occ: "",
+                    fbUrl: "",
+                })
+                newUser.save();
+            }
+        })
+        console.log(profile.emails[0].value);
+        return done(null, profile)
+    }));
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+// used to deserialize the user
+passport.deserializeUser(function(id, done) {
+    return done(null, user)
+})
+
 
 
 
@@ -111,13 +144,11 @@ app.post('/', function(req, res) {
         subject: req.body.subject,
         msg: req.body.msg,
         date: nDate,
-
     })
     contact.save();
     console.log(contact);
     res.redirect("/");
 })
-
 
 app.get("/blog-home", function(req, res) {
 
@@ -364,23 +395,40 @@ app.get('/userposts/:username', function(req, res) {
 app.get('/login', function(req, res) {
     res.render('login');
 })
+app.get('/loginfailed', function(req, res) {
+    res.render('loginfailed');
+})
+app.get('/auth/facebook', passport.authenticate("facebook", { scope: 'email' }))
+app.get('/facebook/callback', passport.authenticate("facebook", {
+    successRedirect: '/register',
+    failureRedirect: '/loginfailed'
+}))
+
+
+
+
 app.get('/register', function(req, res) {
     res.render('register');
+})
+app.post('/register', function(req, res) {
+    console.log(req.body.bUrl)
+    User.findOne({ email: req.body.bEmail }, function(err, user) {
+        if (user !== null) {
+            user.fbUrl = req.body.bUrl;
+            user.clg = req.body.bedu;
+            user.occ = req.body.bocc;
+            user.password = req.body.bPasswrod;
+            user.save();
+            console.log(user);
+        } else res.redirect('/loginfailed');
+    })
+
+    res.redirect('/blog-home');
 })
 
 app.listen(port, function() {
     console.log("server started Successfully");
 })
-
-
-
-
-
-
-
-
-
-
 
 
 //tag

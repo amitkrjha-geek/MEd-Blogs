@@ -10,7 +10,7 @@
                 <div class="jumbotron" style="width: 100%; background:#fff;border:5px solid rgb(28, 74, 133); ">
                     <p class="text-grey">Step: 2</p>
 
-                    <form method="post" action="/compose" class="compose-form" enctype="multipart/form-data">
+                    <form method="post" action="/register" class="compose-form">
                         <h3>Your Info :</h3>
                         <div class="row d-flex align-item-center justify-content-center">
                             <div class="col">
@@ -18,16 +18,19 @@
                                     <input type="text" name="bName" class="form-control" placeholder="Your Name *" value="" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="bHeading" class="form-control" placeholder="Your Email *" value="" required />
+                                    <input type="email" name="bEmail" class="form-control" placeholder="Your Email *" value="" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="bEmail" class="form-control" placeholder="Facebook Profile URL*" value="" required />
+                                    <input type="password" name="bPassword" class="form-control" placeholder="Password *" value="" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="bHeading" class="form-control" placeholder="Occupation *" value="" required />
+                                    <input type="text" name="bUrl" class="form-control" placeholder="Facebook Profile URL*" value="" required />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="bTags" class="form-control" placeholder="Your Education Institution Name*" value="" required />
+                                    <input type="text" name="bocc" class="form-control" placeholder="Occupation *" value="" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="bedu" class="form-control" placeholder="Your Education Institution Name*" value="" required />
                                 </div>
 
                                 <div class="form-group text-center">

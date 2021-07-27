@@ -19,6 +19,8 @@
         "lodash": "^4.17.21",
         "mongoose": "^5.13.2",
         "multer": "^1.4.2",
+        "passport": "^0.4.1",
+        "passport-facebook": "^3.0.0",
         "request": "^2.88.2"
     }
 }
