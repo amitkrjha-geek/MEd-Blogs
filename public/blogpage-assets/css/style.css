@@ -834,6 +834,9 @@ a:hover figcaption {
     .tm-contact-right {
         padding-left: 15px;
     }
+    .user h2 {
+        font-size: 22px;
+    }
 }
 
 @media (max-width: 575px) {
