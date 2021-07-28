@@ -24,7 +24,10 @@ app.use(passport.session());
 //let contacts = []; //array containing contacts
 let title = "MEd Blogs";
 
-
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
 
 
 
@@ -102,7 +105,7 @@ passport.use(new facebookStrategy({
         // pull in our app id and secret from our auth.js file
         clientID: "242251471053853",
         clientSecret: "6b7ea030fe77327a4d115b938970f296",
-        callbackURL: "http://localhost:3000/facebook/callback",
+        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com//facebook/callback",
         profileFields: ['id', 'displayName', , 'emails']
 
     }, // facebook will send back the token and profile
@@ -380,10 +383,7 @@ app.get('/tagnotfound', function(req, res) {
     res.render("tagnotfound");
 
 })
-let port = process.env.PORT;
-if (port == null || port == "") {
-    port = 3000;
-}
+
 app.post('/searchTag', function(req, res) {
     let stagName = _.lowerCase(req.body.query);
 
