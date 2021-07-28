@@ -534,11 +534,23 @@ a {
     color: #fff;
 }
 
+.tm-post-title a {
+    color: #37517e;
+}
+
+h3 a:hover {
+    color: #2d8fa0;
+}
+
 p a {
     color: #37517e;
 }
 
 h1 a {
+    color: #37517e;
+}
+
+.jumbotron a {
     color: #37517e;
 }
 

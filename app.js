@@ -38,8 +38,10 @@ let userSchema = {
     posts: Array,
     occ: String,
     password: String,
+    interest: Array,
 }
 let blogPostsSchema = {
+
     author: String,
     heading: String,
     email: String,
@@ -54,12 +56,14 @@ let blogPostsSchema = {
 }
 
 let commentsSchema = {
-    cAuthor: String,
-    cEmail: String,
-    cDate: String,
-    cMsg: String,
-    clikes: Number,
-    cdislikes: Number,
+    user: Object,
+    Author: String,
+    Password: String,
+    Email: String,
+    Date: String,
+    Msg: String,
+    likes: Number,
+    dislikes: Number,
 }
 const taggedPostSchema = {
     tagName: String,
@@ -112,8 +116,12 @@ passport.use(new facebookStrategy({
                     posts: [],
                     occ: "",
                     fbUrl: "",
+                    password: "",
+                    interest: [],
                 })
                 newUser.save();
+                console.log(newUser);
+
             }
         })
         console.log(profile.emails[0].value);
@@ -194,72 +202,76 @@ app.get("/blogadded", function(req, res) {
     res.render("blogadded");
 })
 app.post("/compose", upload.single('photo'), function(req, res) {
-        var today = new Date();
-        let options = {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        };
-        let rtags = (req.body.bTags).split(" ");
-        for (let i = 0; i < rtags.length; i++) {
-            rtags[i] = _.lowerCase(rtags[i]);
-        }
-        var day = today.toLocaleDateString("en-US", options);
-        if (req.file) {
-            console.log(req.file.filename);
-            let blogPost = new BlogPost({
-                author: _.capitalize(req.body.bName),
-                heading: _.capitalize(req.body.bHeading),
-                email: req.body.bEmail,
-                tags: rtags,
-                date: day,
-                message: req.body.bMsg,
-                comments: [],
-                img: req.file.filename, //img is imagename
-                likes: 0,
-                dislikes: 0,
-                time: today.getTime() / 1000,
-
-            });
-
-            blogPost.tags.forEach(function(tag) {
-                TaggedPost.find({}, function(err, tagposts) { //taggpost is array of objects
-                    tagposts.forEach(function(tagpost) {
-                        if (tagpost.tagName === tag) {
-                            tagpost.posts.push(blogPost);
-                            tagpost.save();
-                        }
-                    })
-                })
-                let taggedpost = new TaggedPost({
-                    tagName: tag,
-                    posts: []
-                })
-                taggedpost.posts.push(blogPost);
-                taggedpost.save();
-            })
-            blogPost.save();
-            User.findOne({ userName: _.lowerCase(req.body.bName) }, function(user, err) {
-                if (err) {
-                    console.log(err);
-                } else if (user !== null) {
-                    user.posts.push(blogPost);
-                    user.save();
-                } else {
-                    let newUser = new User({
-                        userName: _.lowerCase(req.body.bName),
-                        email: req.body.bEmail,
-                        posts: []
-                    })
-                    newUser.posts.push(blogPost);
-                    newUser.save();
+        User.findOne({ email: req.body.bEmail, password: req.body.bPassword }, function(err, user) {
+            if (err) {
+                console.log(err);
+            } else if (user !== null) {
+                var today = new Date();
+                let options = {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                };
+                let rtags = (req.body.bTags).split(" ");
+                for (let i = 0; i < rtags.length; i++) {
+                    rtags[i] = _.lowerCase(rtags[i]);
+                    if (user.interest.indexOf(rtags[i]) === -1) {
+                        user.interest.push(rtags[i]);
+                    }
                 }
-            })
+                var day = today.toLocaleDateString("en-US", options);
+                if (req.file) {
+                    console.log(req.file.filename);
+                    let blogPost = new BlogPost({
+                        author: user.userName,
+                        heading: _.capitalize(req.body.bHeading),
+                        email: req.body.bEmail,
+                        tags: rtags,
+                        date: day,
+                        message: req.body.bMsg,
+                        comments: [],
+                        img: req.file.filename, //img is imagename
+                        likes: 0,
+                        dislikes: 0,
+                        time: today.getTime() / 1000,
+                    });
+                    user.posts.push(blogPost);
 
-            res.redirect("/blogadded");
-        } else throw 'error';
+                    user.save();
+                    blogPost.save();
+
+                    blogPost.tags.forEach(function(tag) {
+                        TaggedPost.findOne({ tagName: tag }, function(err, taggedPost) {
+                            if (taggedPost !== null) {
+                                taggedPost.posts.push(blogPost);
+                                taggedPost.save();
+                            } else {
+                                let newTp = new TaggedPost({
+                                    tagName: tag,
+                                    posts: blogPost,
+                                })
+                                console.log(newTp);
+                                newTp.save();
+                            }
+                        })
+
+                    })
+                    res.redirect("/blogadded");
+                } else throw 'error';
+            } else if (user === null) {
+                res.redirect('/notregistered');
+            }
+
+        })
+
+
+        // } 
     })
     //....................compose route ends.............................
+
+app.get("/notregistered", function(req, res) {
+    res.render("notregistered");
+})
 
 app.get("/singlepost", function(req, res) {
     res.render("singlepost", { post: blogPosts[0] });
@@ -284,7 +296,7 @@ app.get("/singlepost/:postName", function(req, res) {
 app.post("/singlepost/:postName", function(req, res) {
     let reqTitlle = (req.params.postName);
     BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
-
+        //user->ineterst ,post->tags
         var today = new Date();
         let options = {
             day: "numeric",
@@ -292,20 +304,32 @@ app.post("/singlepost/:postName", function(req, res) {
             year: "numeric",
         };
         var day = today.toLocaleDateString("en-US", options);
+        User.findOne({ email: req.body.email, password: req.body.password }, function(err, user) {
+            if (user !== null) {
+                let comment = new Comment({
+                    Author: user.userName,
+                    Email: req.body.email,
+                    Date: day,
+                    Msg: req.body.message,
+                    likes: 0,
+                    dislikes: 0,
+                    user: user
+                });
+                comment.save();
 
-        let comment = new Comment({
-            cAuthor: req.body.name,
-            cEmail: req.body.email,
-            cDate: day,
-            cMsg: req.body.message,
-            clikes: 0,
-            cdislikes: 0
-        });
-        comment.save();
-        post.comments.push(comment);
-        console.log(comment);
-        post.save();
-        res.redirect("/blog-home");
+                post.comments.push(comment);
+                console.log(comment);
+                post.save();
+                res.redirect("/blog-home");
+            } else {
+                res.redirect("/notregistered");
+            }
+
+
+        })
+
+
+
 
 
     });
@@ -381,13 +405,13 @@ app.get('/tagsshow/:tag', function(req, res) {
         }
     })
 })
-app.get('/userposts/:username', function(req, res) {
-    let username = _.lowerCase(req.params.username);
-    User.findOne({ userName: username }, function(err, user) {
+app.get('/userposts/:email', function(req, res) {
+    let email = req.params.email;
+    User.findOne({ email: email }, function(err, user) {
         if (err) {
             console.log(err);
-        } else {
-            res.render('userposts', { blogPosts: user.posts, userName: user.userName, email: user.email });
+        } else if (user !== null) {
+            res.render('userposts', { blogPosts: user.posts, user: user });
 
         }
     })
@@ -411,13 +435,13 @@ app.get('/register', function(req, res) {
     res.render('register');
 })
 app.post('/register', function(req, res) {
-    console.log(req.body.bUrl)
+    console.log(req.body.bPassword)
     User.findOne({ email: req.body.bEmail }, function(err, user) {
         if (user !== null) {
             user.fbUrl = req.body.bUrl;
             user.clg = req.body.bedu;
             user.occ = req.body.bocc;
-            user.password = req.body.bPasswrod;
+            user.password = req.body.bPassword;
             user.save();
             console.log(user);
         } else res.redirect('/loginfailed');

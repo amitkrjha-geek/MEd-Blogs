@@ -1,0 +1,52 @@
+<%- include('partials/header') -%>
+
+    <div class="container-fluid">
+
+        <main class="tm-main">
+            <!-- Search form -->
+            <div class="row tm-row">
+                <div class="col-12">
+                    <form method="post" class="form-inline tm-mb-80 tm-search-form" action="/searchTag">
+                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search Another TAG..." aria-label="Search">
+                        <button class="tm-search-button" type="submit">
+                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row tm-row d-flex justify-content-center align-item-center">
+
+                <div class="jumbotron" style="width: 100%; background:#fff;border:5px solid rgb(28, 74, 133); ">
+                    <h1>❌❌❌Incorrect User Name or Password!!!</h1>
+                    <p>Register to us if you are a new User.</p>
+                    <p><a class="tm-btn tm-btn-primary tm-btn-small ml-3" href="/login" role="button">Authenticate and Register</a></p>
+                </div>
+            </div>
+            <div class="row tm-row tm-mt-100 tm-mb-75">
+                <!-- <div class="tm-prev-next-wrapper">
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
+                    <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
+                </div>
+                <div class="tm-paging-wrapper">
+                    <span class="d-inline-block mr-3">Page</span>
+                    <nav class="tm-paging-nav d-inline-block">
+                        <ul>
+                            <li class="tm-paging-item active">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">1</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">2</a>
+                            </li>   
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">3</a>
+                            </li>
+                            <li class="tm-paging-item">
+                                <a href="#" class="mb-2 tm-btn tm-paging-link">4</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> -->
+            </div>
+        </main>
+    </div>
+    <%- include('partials/footer') -%>

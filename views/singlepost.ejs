@@ -29,7 +29,7 @@
                             <div class="tm-mb-40 d-flex justify-content-between">
                                 <div class="display:inline-block">
                                     <%= post.date %>, by
-                                        <a href="/userposts/<%=post.author%>" style="color:#37517e">
+                                        <a href="/userposts/<%=post.email%>" style="color:#37517e">
                                             <%= post.author %>
                                         </a>
                                 </div>
@@ -62,26 +62,26 @@
                                     <figure class="tm-comment-figure">
                                         <!-- <img src="img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail"> -->
                                         <figcaption class="tm-color-primary text-center">
-                                            <a href="<%=comment.cEmail%>" style="color:#37517e">
-                                                <%=comment.cAuthor%>
+                                            <a href="<%=comment.Email%>" style="color:#37517e">
+                                                <%=comment.Author%>
                                             </a><br>
-                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-up"></i>
+                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.Msg%>"><i class="far fa-thumbs-up"></i>
                                         <%= post.likes %>
                                             </button>
                                             <br>
-                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.cMsg%>"><i class="far fa-thumbs-down"></i>
+                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.Msg%>"><i class="far fa-thumbs-down"></i>
                                         <%= post.likes %>
                                             </button>
                                         </figcaption>
                                     </figure>
                                     <div>
                                         <p class="container">
-                                            <%=comment.cMsg%>
+                                            <%=comment.Msg%>
                                         </p>
                                         <div class="d-flex justify-content-between">
-                                            <span class="tm-color-primary m-3"><%=comment.cDate  %></span>
+                                            <span class="tm-color-primary m-3"><%=comment.Date  %></span>
                                             <a href="#" class="tm-color-primary m-3">REPLY</a>
-                                            <a href="#" class="tm-color-primary m-3">Delete</a>
+                                            <a href="#" class="tm-color-primary m-3">Report</a>
 
                                         </div>
                                     </div>
@@ -90,10 +90,10 @@
                                     <form action="/singlepost/<%=post.heading%>" class="mb-5 tm-comment-form" method="post">
                                         <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
                                         <div class="mb-4">
-                                            <input class="form-control" placeholder="Name *" name="name" type="text">
+                                            <input class="form-control" placeholder="Email *" name="email" type="email">
                                         </div>
                                         <div class="mb-4">
-                                            <input class="form-control" placeholder="Facebook profile link *" name="email" type="text">
+                                            <input class="form-control" placeholder="Password *" name="password" type="password">
                                         </div>
                                         <div class="mb-4">
                                             <textarea class="form-control" placeholder=" Message *" name="message" rows="6"></textarea>

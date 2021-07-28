@@ -1,22 +1,59 @@
 <%- include('partials/header') -%>
-
     <div class="container-fluid">
-        <h1 class="tm-pt-30 tm-color-primary mt-5 pt-5  text-center">Blogs Posted By</h1>
 
-        <h1 class="tm-pt-30 tm-color-primary pt-0 mt-0  text-center">
+        <main class="tm-main" style="padding-bottom: 0;">
+            <!-- Search form -->
+            <div class="row tm-row">
+                <div class="col-12">
+                    <form method="post" class="form-inline tm-mb-80 tm-search-form" action="/searchTag">
+                        <input class="form-control tm-search-input" name="query" type="text" placeholder="Search Another TAG..." aria-label="Search">
+                        <button class="tm-search-button" type="submit">
+                            <i class="fas fa-search tm-search-icon" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row tm-row d-flex justify-content-center align-item-center">
 
-            <%let text =userName; %>
+                <div class="jumbotron" style="width: 100%; background:#fff;border:5px solid rgb(28, 74, 133); ">
+                    <h2>Name:&nbsp;<span class="text-grey"> <%=user.userName%></span>
+                    </h2>
+                    <h2>Facebook Profile:&nbsp;<span class="text-grey">
+                       <a href="https://www.facebook.com"> <%=user.fbUrl%></a></span>
+                    </h2>
+                    <h2>Email:&nbsp;<span class="text-grey">
+                        <%=user.email%></span>
+                    </h2>
+                    <h2>Occupation:&nbsp;<span class="text-grey">
+                        <%=user.occ%></span>
+                    </h2>
+                    <h2>College:&nbsp;<span class="text-grey">
+                        <%=user.clg%></span>
+                    </h2>
+
+                </div>
+            </div>
+
+        </main>
+
+
+        <h1 class="tm-pt-30 tm-color-primary   text-center">Blogs Posted By</h1>
+
+        <h1 class=" tm-color-primary pt-0 mt-0 pb-0 mb-0  text-center">
+
+            <%let text =user.userName; %>
                 <%text = text.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');%>
+
                     <%=text%> are here:<br>
-                        <a href="<%=email%>">
-                        <button class="tm-btn tm-btn-primary tm-btn-large btn-lg ml-3 mt-3 p-3" href="<%=email%>"> 
+                        <!-- <a href="<%=user.fbUrl%>">
+                            <button class="tm-btn tm-btn-primary tm-btn-large btn-lg ml-3 mt-3 p-3" href="<%=user.fbUrl%>"> 
                     <i class="fab fa-facebook pr-2"></i>
                             <%=text%></button>
-</a>
+                        </a> -->
 
         </h1>
 
-        <main class="tm-main">
+        <main class="tm-main" style="padding-top:0">
             <!-- Search form -->
 
             <div class="row tm-row d-flex justify-content-center align-item-center">
