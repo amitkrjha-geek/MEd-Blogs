@@ -439,6 +439,9 @@ app.get('/facebook/callback', passport.authenticate("facebook", {
 app.get('/register', function(req, res) {
     res.render('register');
 })
+app.get('/loginsuccess', function(req, res) {
+    res.render('loginsuccess');
+})
 app.post('/register', function(req, res) {
     console.log(req.body.bPassword)
     User.findOne({ email: req.body.bEmail }, function(err, user) {
@@ -452,7 +455,7 @@ app.post('/register', function(req, res) {
         } else res.redirect('/loginfailed');
     })
 
-    res.redirect('/blog-home');
+    res.redirect('/loginsuccess');
 })
 
 app.listen(port, function() {
