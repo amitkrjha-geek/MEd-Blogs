@@ -11,8 +11,8 @@ const passport = require('passport')
 const facebookStrategy = require('passport-facebook').Strategy
 
 
-mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
-//mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -316,11 +316,16 @@ app.post("/singlepost/:postName", function(req, res) {
                     user: user
                 });
                 comment.save();
-
+                post.tags.forEach(function(tag) {
+                    if (user.interest.indexOf(tag) === -1) {
+                        user.interest.push(tag);
+                    }
+                })
+                user.save();
                 post.comments.push(comment);
                 console.log(comment);
                 post.save();
-                res.redirect("/blog-home");
+                res.redirect("/singlepost/" + reqTitlle);
             } else {
                 res.redirect("/notregistered");
             }

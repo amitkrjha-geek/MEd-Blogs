@@ -62,16 +62,16 @@
                                     <figure class="tm-comment-figure">
                                         <!-- <img src="img/comment-1.jpg" alt="Image" class="mb-2 rounded-circle img-thumbnail"> -->
                                         <figcaption class="tm-color-primary text-center">
-                                            <a href="<%=comment.Email%>" style="color:#37517e">
+                                            <a href="/userposts/<%=comment.Email%>" style="color:#37517e">
                                                 <%=comment.Author%>
                                             </a><br>
-                                            <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.Msg%>"><i class="far fa-thumbs-up"></i>
+                                            <!-- <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.Msg%>"><i class="far fa-thumbs-up"></i>
                                         <%= post.likes %>
                                             </button>
                                             <br>
                                             <button type="submit" class="btn btn-transparent" name="btn" value="<%= comment.Msg%>"><i class="far fa-thumbs-down"></i>
                                         <%= post.likes %>
-                                            </button>
+                                            </button> -->
                                         </figcaption>
                                     </figure>
                                     <div>
@@ -90,13 +90,13 @@
                                     <form action="/singlepost/<%=post.heading%>" class="mb-5 tm-comment-form" method="post">
                                         <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
                                         <div class="mb-4">
-                                            <input class="form-control" placeholder="Email *" name="email" type="email">
+                                            <input class="form-control" placeholder="Email *" name="email" type="email" required>
                                         </div>
                                         <div class="mb-4">
-                                            <input class="form-control" placeholder="Password *" name="password" type="password">
+                                            <input class="form-control" placeholder="Password *" name="password" type="password" required>
                                         </div>
                                         <div class="mb-4">
-                                            <textarea class="form-control" placeholder=" Message *" name="message" rows="6"></textarea>
+                                            <textarea class="form-control" placeholder=" Message *" name="message" rows="6" required></textarea>
                                         </div>
                                         <div class="text-right">
                                             <button class="tm-btn tm-btn-primary tm-btn-small">Submit</button>
