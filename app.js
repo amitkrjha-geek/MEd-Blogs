@@ -103,9 +103,9 @@ let MainContact = mongoose.model('MainContact', mainContactsSchema);
 passport.use(new facebookStrategy({
 
         // pull in our app id and secret from our auth.js file
-        clientID: "242251471053853",
-        clientSecret: "6b7ea030fe77327a4d115b938970f296",
-        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/facebook/callback",
+        clientID: "524707071918422",
+        clientSecret: "e241cfefbcc0f305d3df55fb69a0d848",
+        callbackURL: "http://localhost:3000/facebook/callback",
         profileFields: ['id', 'displayName', , 'emails']
 
     }, // facebook will send back the token and profile
