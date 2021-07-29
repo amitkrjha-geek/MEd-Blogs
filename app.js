@@ -105,7 +105,7 @@ passport.use(new facebookStrategy({
         // pull in our app id and secret from our auth.js file
         clientID: "524707071918422",
         clientSecret: "e241cfefbcc0f305d3df55fb69a0d848",
-        callbackURL: "http://localhost:3000/facebook/callback",
+        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/facebook/callback",
         profileFields: ['id', 'displayName', , 'emails']
 
     }, // facebook will send back the token and profile
