@@ -19,7 +19,7 @@
                     <h2>Name:&nbsp;<span class="text-grey"> <%=user.userName%></span>
                     </h2>
                     <h2>Facebook Profile:&nbsp;<span class="text-grey">
-                       <a href="https://www.facebook.com"> <%=user.fbUrl%></a></span>
+                       <a href="https://www.facebook.com"> <%=(user.fbUrl).substr(25, user.fbUrl.length) %></a></span>
                     </h2>
                     <h2>Email:&nbsp;<span class="text-grey">
                         <%=user.email%></span>
