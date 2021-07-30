@@ -489,10 +489,22 @@ app.post('/register', function(req, res) {
             user.password = req.body.bPassword;
             user.save();
             console.log(user);
-        } else res.redirect('/loginfailed');
-    })
 
+        } else {
+            let newUser = new User({
+                fbUrl: req.body.bUrl,
+                clg: req.body.bedu,
+                occ: req.body.bocc,
+                password: req.body.bPassword,
+                userName: req.body.bName,
+                email: req.body.bEmail,
+            })
+
+        }
+
+    })
     res.redirect('/loginsuccess');
+
 })
 
 app.listen(port, function() {
