@@ -1,3 +1,4 @@
+require('dotenv').config();
 let express = require('express');
 let bodyParser = require('body-parser');
 let ejs = require('ejs');
@@ -9,10 +10,14 @@ let mongoose = require('mongoose');
 const { post } = require('request');
 const passport = require('passport')
 const facebookStrategy = require('passport-facebook').Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const findOrCreate = require('mongoose-findorcreate')
 
 
 //mongoose.connect('mongodb://localhost:27017/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/MEdBlogsDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.set("useCreateIndex", true);
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +38,7 @@ if (port == null || port == "") {
 
 
 
-let userSchema = {
+let userSchema = new mongoose.Schema({
     userName: String,
     email: String,
     clg: String,
@@ -42,7 +47,8 @@ let userSchema = {
     occ: String,
     password: String,
     interest: Array,
-}
+    googleId: String
+});
 let blogPostsSchema = {
 
     author: String,
@@ -87,6 +93,10 @@ let mainContactsSchema = {
     msg: String,
     date: {},
 }
+
+userSchema.plugin(findOrCreate);
+
+
 let User = mongoose.model('User', userSchema);
 let BlogPost = mongoose.model('BlogPost', blogPostsSchema);
 let Comment = mongoose.model('Comment', commentsSchema);
@@ -97,15 +107,44 @@ let MainContact = mongoose.model('MainContact', mainContactsSchema);
 
 
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
 
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
+
+
+passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/auth/google/register",
+        userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+    },
+    function(accessToken, refreshToken, profile, cb) {
+        console.log(profile.id);
+        User.findOrCreate({ googleId: profile.id }, function(err, user) {
+            console.log(profile.id);
+            return cb(err, user);
+        });
+    },
+
+    function(accessToken, refreshToken, email, cb) {
+        console.log(email);
+    }
+
+));
 
 
 passport.use(new facebookStrategy({
 
         // pull in our app id and secret from our auth.js file
-        clientID: "524707071918422",
-        clientSecret: "e241cfefbcc0f305d3df55fb69a0d848",
-        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/facebook/callback",
+        clientID: "242251471053853",
+        clientSecret: "6b7ea030fe77327a4d115b938970f296",
+        callbackURL: "http://localhost:3000/facebook/callback",
         profileFields: ['id', 'displayName', , 'emails']
 
     }, // facebook will send back the token and profile
@@ -130,15 +169,6 @@ passport.use(new facebookStrategy({
         console.log(profile.emails[0].value);
         return done(null, profile)
     }));
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-// used to deserialize the user
-passport.deserializeUser(function(id, done) {
-    return done(null, user)
-})
-
 
 
 
@@ -147,6 +177,15 @@ passport.deserializeUser(function(id, done) {
 app.get('/', function(req, res) {
     res.render('index');
 })
+app.get("/auth/google",
+    passport.authenticate('google', { scope: ["profile"] })
+);
+app.get("/auth/google/register",
+    passport.authenticate('google', { failureRedirect: "/loginfailed" }),
+    function(req, res) {
+        // Successful authentication, redirect to secrets.
+        res.redirect("/register");
+    });
 app.post('/', function(req, res) {
     let nDate = new Date();
     let contact = new MainContact({
@@ -437,7 +476,9 @@ app.get('/facebook/callback', passport.authenticate("facebook", {
 
 
 app.get('/register', function(req, res) {
-    res.render('register');
+    if (req.isAuthenticated()) {
+        res.render('register');
+    } else res.render('register');
 })
 app.get('/loginsuccess', function(req, res) {
     res.render('loginsuccess');
