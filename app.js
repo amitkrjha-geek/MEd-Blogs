@@ -132,10 +132,6 @@ passport.use(new GoogleStrategy({
         });
     },
 
-    function(accessToken, refreshToken, email, cb) {
-        console.log(email);
-    }
-
 ));
 
 
