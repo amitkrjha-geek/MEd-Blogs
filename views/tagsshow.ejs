@@ -59,7 +59,7 @@
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between">
-                                    <span>by <a href="/userposts/<%=post.author%>" style="color:rgb(28, 74, 133)">
+                                    <span>by <a href="/userposts/<%=post.email%>" style="color:rgb(28, 74, 133)">
                                          <%= post.author %></a></span>
 
                                     <span><form action="/likePost" method="post"><button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up" ></i> <%= post.likes %></button></form></span>

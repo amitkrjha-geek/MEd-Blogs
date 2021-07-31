@@ -11,17 +11,19 @@
                     <p class="text-grey">Step: 2</p>
 
                     <form method="post" action="/register" class="compose-form">
+                        <h3>Welcome!
+                            <%=userName%>
+                        </h3>
+
                         <h3>Your Info :</h3>
                         <div class="row d-flex align-item-center justify-content-center">
                             <div class="col">
                                 <div class="form-group">
-                                    <input type="text" name="bName" class="form-control" placeholder="Your Name *" value="" required />
+                                    <input type="text" name="bName" class="form-control" placeholder="User Name *" value="<%=userName%>" required />
                                 </div>
+
                                 <div class="form-group">
-                                    <input type="email" name="bEmail" class="form-control" placeholder="Your Email *" value="" required />
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="bPassword" class="form-control" placeholder="Password *" value="" required />
+                                    <input type="password" name="bPassword" class="form-control" placeholder="Password  *" value="" required />
                                 </div>
                                 <div class="form-group">
                                     <input type="text" name="bUrl" class="form-control" placeholder="Facebook Profile URL*" value="" required />
