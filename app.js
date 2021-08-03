@@ -155,7 +155,7 @@ passport.use(new facebookStrategy({
         clientID: "2637659449874702",
         clientSecret: "4237fadc60a5c810ecb5a4fcdd57bcd7",
         callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/facebook/callback",
-        profileFields: ['id', 'displayName', , 'emails']
+        profileFields: ['id', 'displayName', 'emails']
 
     }, // facebook will send back the token and profile
     function(accessToken, refreshToken, profile, cb) {
