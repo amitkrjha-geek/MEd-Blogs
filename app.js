@@ -365,6 +365,10 @@ app.get('/signup', function(req, res) {
     }
     res.render('signup', { userName: userName, userEmail: userEmail });
 })
+app.get('/signout', function(req, res) {
+    req.logout();
+    res.redirect('/blog-home');
+});
 app.get('/loginfailed', function(req, res) {
     res.render('loginfailed');
 })
