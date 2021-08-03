@@ -38,58 +38,63 @@
                        
                         </span>
                     </h2>
+                    <%if(user.userName===userName){%>
+                        <div class="text-center">
+                            <a class="tm-btn tm-btn-primary tm-btn-small w-50" href="/register" role="button">Change User Info</a>
+                        </div>
+                        <%}%>
                 </div>
             </div>
 
         </main>
+        <%if(blogPosts.length > 0){%>
 
+            <h1 class="tm-pt-30 tm-color-primary   text-center">Blogs Posted By</h1>
 
-        <h1 class="tm-pt-30 tm-color-primary   text-center">Blogs Posted By</h1>
+            <h1 class=" tm-color-primary pt-0 mt-0 pb-0 mb-0  text-center">
 
-        <h1 class=" tm-color-primary pt-0 mt-0 pb-0 mb-0  text-center">
+                <%let text =user.userName; %>
+                    <%text = text.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');%>
 
-            <%let text =user.userName; %>
-                <%text = text.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');%>
-
-                    <%=text%> are here:<br>
-                        <!-- <a href="<%=user.fbUrl%>">
+                        <%=text%> are here:<br>
+                            <!-- <a href="<%=user.fbUrl%>">
                             <button class="tm-btn tm-btn-primary tm-btn-large btn-lg ml-3 mt-3 p-3" href="<%=user.fbUrl%>"> 
                     <i class="fab fa-facebook pr-2"></i>
                             <%=text%></button>
                         </a> -->
 
-        </h1>
+            </h1>
 
-        <main class="tm-main" style="padding-top:0">
-            <!-- Search form -->
+            <main class="tm-main" style="padding-top:0">
+                <!-- Search form -->
 
-            <div class="row tm-row d-flex justify-content-center align-item-center">
+                <div class="row tm-row d-flex justify-content-center align-item-center">
 
 
-                <%for(let i=blogPosts.length-1; i>=0;i--)  { %>
-                    <%let post =blogPosts[i]; %>
-                        <a href="/singlepost/<%= post.heading%>">
-                            <article class="col-12 col-md-6 tm-post p-4">
-                                <hr class="tm-hr-primary">
-                                <h2 class="tm-pt-30 tm-color-primary tm-post-title">
-                                    <%= post.heading  %>
-                                </h2>
+                    <%for(let i=blogPosts.length-1; i>=0;i--)  { %>
+                        <%let post =blogPosts[i]; %>
+                            <a href="/singlepost/<%= post.heading%>">
+                                <article class="col-12 col-md-6 tm-post p-4">
+                                    <hr class="tm-hr-primary">
+                                    <h2 class="tm-pt-30 tm-color-primary tm-post-title">
+                                        <%= post.heading  %>
+                                    </h2>
 
-                                <a href="/singlepost/<%= post.heading%>" class="effect-lily tm-post-link tm-pt-20">
-                                    <div class=" tm-post-link-inner">
-                                        <img src="/blogpage-assets/img/<%=post.img%>" alt="Image" height="300px" width="200px">
-                                    </div>
-                                    <span class="position-absolute tm-new-badge">New</span>
-                                </a>
-                                <p class="tm-pt-30">
+                                    <a href="/singlepost/<%= post.heading%>" class="effect-lily tm-post-link tm-pt-20">
+                                        <div class=" tm-post-link-inner">
+                                            <img src="/blogpage-assets/img/<%=post.img%>" alt="Image" height="300px" width="200px">
+                                        </div>
+                                        <span class="position-absolute tm-new-badge">New</span>
+                                    </a>
+                                    <p class="tm-pt-30">
 
-                                    <%= post.message.substring(0,200)%>
-                                        <% if(post.message.length>200){%>
-                                            ... <a href="/singlepost/<%= post.heading%>" class="tm-color-primary">Read More</a>
-                                            <%}%>
-                                </p>
-                                <div class="d-flex justify-content-between tm-pt-45">
-                                    <span class="tm-color-primary">
+                                        <%= post.message.substring(0,200)%>
+                                            <% if(post.message.length>200){%>
+                                                ... <a href="/singlepost/<%= post.heading%>" class="tm-color-primary">Read More</a>
+                                                <%}%>
+                                    </p>
+                                    <div class="d-flex justify-content-between tm-pt-45">
+                                        <span class="tm-color-primary">
                                 <% post.tags.forEach(function(tag){ %>
                                     <a href="/tagsshow/<%=tag%>" style="color:rgb(28, 74, 133)" >
                                     #<%= tag %></a> &nbsp;
@@ -98,25 +103,26 @@
                                 
                                 
                                </span>
-                                    <span class="tm-color-primary"><%= post.date %></span>
-                                </div>
-                                <hr>
-                                <div class="d-flex justify-content-between">
-                                    <span>by <a href="<%=post.email%>" style="color:rgb(28, 74, 133)">
+                                        <span class="tm-color-primary"><%= post.date %></span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <span>by <a href="<%=post.email%>" style="color:rgb(28, 74, 133)">
                                          <%= post.author %></a></span>
 
-                                    <span><form action="/likePost" method="post"><button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up" ></i> <%= post.likes %></button></form></span>
-                                    <span><form action="/dislikePost" method="post"><button type="submit" class="btn btn-transparent" name="btn"  value="<%= post.heading%>"><i class="far fa-thumbs-down" ></i> <%= post.dislikes %></button></form></span>
-                                    <span><%= post.comments.length %> Comments</span>
-                                </div>
-                            </article>
-                        </a>
-                        <% } %>
+                                        <span><form action="/likePost" method="post"><button type="submit" class="btn btn-transparent" name="btn" value="<%= post.heading%>"><i class="far fa-thumbs-up" ></i> <%= post.likes %></button></form></span>
+                                        <span><form action="/dislikePost" method="post"><button type="submit" class="btn btn-transparent" name="btn"  value="<%= post.heading%>"><i class="far fa-thumbs-down" ></i> <%= post.dislikes %></button></form></span>
+                                        <span><%= post.comments.length %> Comments</span>
+                                    </div>
+                                </article>
+                            </a>
+                            <% } %>
 
 
-            </div>
-            <div class="row tm-row tm-mt-100 tm-mb-75">
-                <!-- <div class="tm-prev-next-wrapper">
+                </div>
+                <%}%>
+                    <div class="row tm-row tm-mt-100 tm-mb-75">
+                        <!-- <div class="tm-prev-next-wrapper">
                     <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next disabled tm-mr-20">Prev</a>
                     <a href="#" class="mb-2 tm-btn tm-btn-primary tm-prev-next">Next</a>
                 </div>
@@ -139,7 +145,7 @@
                         </ul>
                     </nav>
                 </div> -->
-            </div>
-        </main>
+                    </div>
+            </main>
     </div>
     <%- include('partials/footer') -%>

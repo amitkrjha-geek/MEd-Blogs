@@ -42,32 +42,44 @@
                             <i class="fas fa-home"></i> Blog Home
                         </a>
                     </li>
-                    <li class="tm-nav-item ">
-                        <a href="/signup" class="tm-nav-link">
-                            <i class="fas fa-sign-in-alt"></i> Log In
-                        </a>
-                    </li>
-                    <li class="tm-nav-item ">
-                        <a href="/about" class="tm-nav-link">
-                            <i class="fas fa-users"></i> About Us
-                        </a>
-                    </li>
+                    <%   if(userName===""){%>
+                        <li class="tm-nav-item ">
+                            <a href="/signup" class="tm-nav-link">
+                                <i class="fas fa-sign-in-alt"></i> Log In
+                            </a>
+                        </li>
 
-                    <li class="tm-nav-item">
-                        <a href="/" class="tm-nav-link">
-                            <div class="tm-hp-header">M|P </div> MEd|Pedia
-                        </a>
-                    </li>
-                    <li class="tm-nav-item">
-                        <a href="/compose" class="tm-nav-link">
-                            <i class="fas fa-users"></i> Compose Blog
-                        </a>
-                    </li>
-                    <li class="tm-nav-item">
-                        <a href="/contact" class="tm-nav-link ">
-                            <i class="far fa-comments"></i> Contact Us
-                        </a>
-                    </li>
+                        <%}else{%>
+                            <li class="tm-nav-item ">
+                                <a href="/signup" class="tm-nav-link">
+                                    <i class="fas fa-sign-out-alt"></i> Log out
+                                </a>
+                            </li>
+
+                            <%}%>
+
+
+                                <li class="tm-nav-item ">
+                                    <a href="/about" class="tm-nav-link">
+                                        <i class="fas fa-users"></i> About Us
+                                    </a>
+                                </li>
+
+                                <li class="tm-nav-item">
+                                    <a href="/" class="tm-nav-link">
+                                        <div class="tm-hp-header">M|P </div> MEd|Pedia
+                                    </a>
+                                </li>
+                                <li class="tm-nav-item">
+                                    <a href="/compose" class="tm-nav-link">
+                                        <i class="fas fa-users"></i> Compose Blog
+                                    </a>
+                                </li>
+                                <li class="tm-nav-item">
+                                    <a href="/contact" class="tm-nav-link ">
+                                        <i class="far fa-comments"></i> Contact Us
+                                    </a>
+                                </li>
                 </ul>
             </nav>
             <p class="tm-mb-80 pr-5 text-white text-center">

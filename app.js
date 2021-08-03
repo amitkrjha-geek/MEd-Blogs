@@ -53,6 +53,7 @@ let userSchema = new mongoose.Schema({
     password: String,
     interest: Array,
     googleId: String,
+    facebookId: String,
     registered: {
         type: Boolean,
         default: false
@@ -132,7 +133,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/auth/google/register",
+        callbackURL: "http://localhost:3000/auth/google/register",
         userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
     },
     function(accessToken, refreshToken, profile, cb) {
@@ -150,33 +151,21 @@ passport.use(new GoogleStrategy({
 passport.use(new facebookStrategy({
 
         // pull in our app id and secret from our auth.js file
-        clientID: "242251471053853",
-        clientSecret: "6b7ea030fe77327a4d115b938970f296",
-        callbackURL: "http://localhost:3000/facebook/callback",
+        clientID: "4461207250585809",
+        clientSecret: "ba79e73fe1f246782982cdf3a3d4a9b6",
+        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/facebook/callback",
         profileFields: ['id', 'displayName', , 'emails']
 
     }, // facebook will send back the token and profile
-    function(token, refreshToken, profile, done) {
-        User.findOne({ email: profile.emails[0].value }, function(err, user) {
-            if (user === null) {
-                let newUser = new User({
-                    userName: profile.displayName,
-                    email: profile.emails[0].value,
-                    clg: "",
-                    posts: [],
-                    occ: "",
-                    fbUrl: "",
-                    password: "",
-                    interest: [],
-                })
-                newUser.save();
-                console.log(newUser);
+    function(accessToken, refreshToken, profile, cb) {
+        console.log(profile.displayName);
+        User.findOrCreate({ facebookId: profile.id, email: profile.emails[0].value, userName: profile.displayName, }, function(err, user) {
+            console.log(profile.id);
+            return cb(err, user);
+        });
+    },
 
-            }
-        })
-
-        return done(null, profile)
-    }));
+));
 
 
 
