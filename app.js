@@ -138,7 +138,7 @@ passport.use(new GoogleStrategy({
     },
     function(accessToken, refreshToken, profile, cb) {
         console.log(profile.displayName);
-        conole.log(profile);
+        console.log(profile);
         User.findOrCreate({ googleId: profile.id, email: profile.emails[0].value, userName: profile.displayName, }, function(err, user) {
 
             return cb(err, user);
@@ -160,7 +160,7 @@ passport.use(new facebookStrategy({
     }, // facebook will send back the token and profile
     function(accessToken, refreshToken, profile, cb) {
         console.log(profile.displayName);
-        conole.log(profile);
+        console.log(profile);
 
         User.findOrCreate({ facebookId: profile.id, email: profile.emails[0].value, userName: profile.displayName, }, function(err, user) {
             console.log(profile.id);
