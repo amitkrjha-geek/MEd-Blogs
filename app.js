@@ -151,8 +151,8 @@ passport.use(new GoogleStrategy({
 passport.use(new facebookStrategy({
 
         // pull in our app id and secret from our auth.js file
-        clientID: "4461207250585809",
-        clientSecret: "ba79e73fe1f246782982cdf3a3d4a9b6",
+        clientID: "2637659449874702",
+        clientSecret: "4237fadc60a5c810ecb5a4fcdd57bcd7",
         callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/facebook/callback",
         profileFields: ['id', 'displayName', , 'emails']
 
