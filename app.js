@@ -61,7 +61,7 @@ let userSchema = new mongoose.Schema({
 });
 let blogPostsSchema = {
 
-    author: String,
+    authorName: String,
     heading: String,
     email: String,
     tags: [],
@@ -467,9 +467,7 @@ app.post("/contact", function(req, res) {
 
         })
         contact.save();
-        Contact.find({}, function(err, contact) {
-            console.log(contact);
-        })
+
         res.redirect("/msgsend");
     })
     //...................contact route end..........................
@@ -499,7 +497,7 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                 if (req.file) {
                     console.log(req.file.filename);
                     let blogPost = new BlogPost({
-                        author: user.userName,
+                        authorName: user.userName,
                         heading: _.capitalize(req.body.bHeading),
                         email: req.user.email,
                         tags: rtags,
