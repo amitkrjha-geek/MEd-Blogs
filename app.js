@@ -497,7 +497,7 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                 if (req.file) {
                     console.log(req.file.filename);
                     let blogPost = new BlogPost({
-                        author: req.user,
+
                         authorName: user.userName,
                         heading: _.capitalize(req.body.bHeading),
                         email: req.user.email,
