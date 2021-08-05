@@ -16,29 +16,29 @@
             <div class="row tm-row d-flex justify-content-center align-item-center">
 
                 <div class="jumbotron user" style="width: 100%; background:#fff;border:5px solid rgb(28, 74, 133); ">
-                    <h2>Name:&nbsp;<span class="text-grey"> <%=user.userName%></span>
+                    <h2>Name:&nbsp;<span class="text-grey"> <%=buser.userName%></span>
                     </h2>
                     <h2>Facebook Profile:&nbsp;<span class="text-grey">
-                       <a href="https://www.facebook.com"> <%=(user.fbUrl).substr(25, user.fbUrl.length) %></a></span>
+                       <a href="https://www.facebook.com"> <%=(buser.fbUrl).substr(25, buser.fbUrl.length) %></a></span>
                     </h2>
                     <h2>Email:&nbsp;<span class="text-grey">
-                        <%=user.email%></span>
+                        <%=buser.email%></span>
                     </h2>
                     <h2>Occupation:&nbsp;<span class="text-grey">
-                        <%=user.occ%></span>
+                        <%=buser.occ%></span>
                     </h2>
                     <h2>College:&nbsp;<span class="text-grey">
-                        <%=user.clg%></span>
+                        <%=buser.clg%></span>
                     </h2>
 
                     <h2>Interests:&nbsp;<span class="text-grey">
-                       <%user.interest.forEach(function(tag){%>
+                       <%buser.interest.forEach(function(tag){%>
                            <%=tag%>,
                        <%})%>
                        
                         </span>
                     </h2>
-                    <%if(user.userName===userName){%>
+                    <%if(buser.userName===userName){%>
                         <div class="text-center">
                             <a class="tm-btn tm-btn-primary tm-btn-small w-50" href="/change-info" role="button">Change User Info</a>
                         </div>
@@ -53,12 +53,12 @@
 
             <h1 class=" tm-color-primary pt-0 mt-0 pb-0 mb-0  text-center">
 
-                <%let text =user.userName; %>
+                <%let text =buser.userName; %>
                     <%text = text.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');%>
 
                         <%=text%> are here:<br>
-                            <!-- <a href="<%=user.fbUrl%>">
-                            <button class="tm-btn tm-btn-primary tm-btn-large btn-lg ml-3 mt-3 p-3" href="<%=user.fbUrl%>"> 
+                            <!-- <a href="<%=buser.fbUrl%>">
+                            <button class="tm-btn tm-btn-primary tm-btn-large btn-lg ml-3 mt-3 p-3" href="<%=buser.fbUrl%>"> 
                     <i class="fab fa-facebook pr-2"></i>
                             <%=text%></button>
                         </a> -->

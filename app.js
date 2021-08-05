@@ -336,6 +336,7 @@ app.get('/tagsshow/:tag', function(req, res) {
 app.get('/userposts/:_id', function(req, res) {
     let userName = "";
     let userEmail = "";
+
     if (req.isAuthenticated()) {
         //console.log("->>>>>>>>" + req.user);
         userName = req.user.userName;
@@ -348,7 +349,7 @@ app.get('/userposts/:_id', function(req, res) {
         if (err) {
             console.log(err);
         } else if (user !== null) {
-            res.render('userposts', { blogPosts: user.posts, user: user, userName: userName, userEmail: userEmail, user: req.user });
+            res.render('userposts', { blogPosts: user.posts, buser: user, userName: userName, userEmail: userEmail, user: req.user });
 
         }
     })
@@ -573,7 +574,7 @@ app.post("/singlepost/:postName", function(req, res) {
                         Msg: req.body.message,
                         likes: 0,
                         dislikes: 0,
-                        user: user
+                        user: req.user
                     });
                     comment.save();
                     post.tags.forEach(function(tag) {
