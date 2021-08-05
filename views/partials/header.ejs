@@ -28,9 +28,11 @@
             <div class="tm-site-header text-center">
                 <h3>
                     <div class="mb-3 mx-auto">
-                        <a href="/userposts/<%=userEmail%>" class="logo">
-                            <%=userName%>
-                        </a>
+                        <%if(userName!==""){%>
+                            <a href="/userposts/<%=user._id%>" class="logo">
+                                <%=userName%>
+                            </a>
+                            <%}%>
                     </div>
                 </h3>
                 <h1 class="text-center">MEd Blogs</h1>

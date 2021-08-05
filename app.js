@@ -60,7 +60,7 @@ let userSchema = new mongoose.Schema({
     },
 });
 let blogPostsSchema = {
-    author: [userSchema],
+    author: Object,
     authorName: String,
     heading: String,
     email: String,
@@ -133,7 +133,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "https://ronchon-monsieur-17347.herokuapp.com/auth/google/register",
+        callbackURL: "http://localhost:3000/auth/google/register",
         userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
     },
     function(accessToken, refreshToken, profile, cb) {
@@ -203,7 +203,7 @@ app.get("/blog-home", function(req, res) {
     }
 
     BlogPost.find({}, function(err, blogPosts) {
-        res.render("blog-index", { blogPosts: blogPosts, userName: userName, userEmail: userEmail });
+        res.render("blog-index", { blogPosts: blogPosts, userName: userName, userEmail: userEmail, user: req.user });
     })
 
 })
@@ -217,7 +217,7 @@ app.get('/msgsend', function(req, res) {
     } else {
 
     }
-    res.render('msgsend', { userName: userName, userEmail: userEmail });
+    res.render('msgsend', { userName: userName, userEmail: userEmail, user: req.user });
 })
 app.get("/contact", function(req, res) {
     let userName = "";
@@ -229,7 +229,7 @@ app.get("/contact", function(req, res) {
     } else {
 
     }
-    res.render("contact", { userName: userName, userEmail: userEmail });
+    res.render("contact", { userName: userName, userEmail: userEmail, user: req.user });
 })
 app.get("/compose", function(req, res) {
     let userName = "";
@@ -238,7 +238,7 @@ app.get("/compose", function(req, res) {
         //console.log("->>>>>>>>" + req.user);
         userName = req.user.userName;
         userEmail = req.user.email;
-        res.render("compose", { userName: userName, userEmail: userEmail });
+        res.render("compose", { userName: userName, userEmail: userEmail, user: req.user });
     } else {
         res.redirect("/signup");
     }
@@ -253,7 +253,7 @@ app.get("/blogadded", function(req, res) {
     } else {
 
     }
-    res.render("blogadded", { userName: userName, userEmail: userEmail });
+    res.render("blogadded", { userName: userName, userEmail: userEmail, user: req.user });
 })
 app.get("/notregistered", function(req, res) {
     let userName = "";
@@ -265,7 +265,7 @@ app.get("/notregistered", function(req, res) {
     } else {
 
     }
-    res.render("notregistered", { userName: userName, userEmail: userEmail });
+    res.render("notregistered", { userName: userName, userEmail: userEmail, user: req.user });
 })
 
 
@@ -282,7 +282,7 @@ app.get('/about', function(req, res) {
     } else {
 
     }
-    res.render('about', { userName: userName, userEmail: userEmail });
+    res.render('about', { userName: userName, userEmail: userEmail, user: req.user });
 })
 
 
@@ -300,7 +300,7 @@ app.get("/singlepost/:postName", function(req, res) {
     }
     let reqTitlle = (req.params.postName);
     BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
-        res.render("singlepost", { post: post, userName: userName, userEmail: userEmail });
+        res.render("singlepost", { post: post, userName: userName, userEmail: userEmail, user: req.user });
 
     });
 
@@ -327,13 +327,13 @@ app.get('/tagsshow/:tag', function(req, res) {
 
             lfound = 1;
             console.log(tag);
-            res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName, userName: userName, userEmail: userEmail });
+            res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName, userName: userName, userEmail: userEmail, user: req.user });
         } else if (tag === null) {
             res.redirect('/tagnotfound');
         }
     })
 })
-app.get('/userposts/:email', function(req, res) {
+app.get('/userposts/:_id', function(req, res) {
     let userName = "";
     let userEmail = "";
     if (req.isAuthenticated()) {
@@ -343,12 +343,12 @@ app.get('/userposts/:email', function(req, res) {
     } else {
 
     }
-    let email = req.params.email;
-    User.findOne({ email: email }, function(err, user) {
+    let _id = req.params._id;
+    User.findOne({ _id: _id }, function(err, user) {
         if (err) {
             console.log(err);
         } else if (user !== null) {
-            res.render('userposts', { blogPosts: user.posts, user: user, userName: userName, userEmail: userEmail });
+            res.render('userposts', { blogPosts: user.posts, user: user, userName: userName, userEmail: userEmail, user: req.user });
 
         }
     })
@@ -363,7 +363,7 @@ app.get('/signup', function(req, res) {
     } else {
 
     }
-    res.render('signup', { userName: userName, userEmail: userEmail });
+    res.render('signup', { userName: userName, userEmail: userEmail, user: req.user });
 })
 app.get('/signout', function(req, res) {
     req.logout();
@@ -396,7 +396,7 @@ app.get('/register', function(req, res) {
         if (req.user.registered === true) {
             res.redirect('/loginsuccess')
         } else {
-            res.render('register', { userName: userName, userEmail: userEmail });
+            res.render('register', { userName: userName, userEmail: userEmail, user: req.user });
         }
     } else res.render('signup');
 })
@@ -411,7 +411,7 @@ app.get('/change-info', function(req, res) {
 
     }
     if (req.isAuthenticated()) {
-        res.render('register', { userName: userName, userEmail: userEmail });
+        res.render('register', { userName: userName, userEmail: userEmail, user: req.user });
     } else res.render('signup');
 })
 app.get('/loginsuccess', function(req, res) {
@@ -424,7 +424,7 @@ app.get('/loginsuccess', function(req, res) {
     } else {
 
     }
-    res.render('loginsuccess', { userName: userName, userEmail: userEmail });
+    res.render('loginsuccess', { userName: userName, userEmail: userEmail, user: req.user });
 })
 app.get('/tagnotfound', function(req, res) {
     let userName = "";
@@ -436,7 +436,7 @@ app.get('/tagnotfound', function(req, res) {
     } else {
 
     }
-    res.render("tagnotfound", { userName: userName, userEmail: userEmail });
+    res.render("tagnotfound", { userName: userName, userEmail: userEmail, user: req.user });
 
 })
 
@@ -476,7 +476,7 @@ app.post("/contact", function(req, res) {
 //......................compose route begin......................
 
 app.post("/compose", upload.single('photo'), function(req, res) {
-        User.findOne({ email: req.user.email }, function(err, user) {
+        User.findOne({ _id: req.user._id }, function(err, user) {
             if (err) {
                 console.log(err);
             } else if (user !== null) {
@@ -497,7 +497,7 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                 if (req.file) {
                     console.log(req.file.filename);
                     let blogPost = new BlogPost({
-
+                        author: req.user,
                         authorName: user.userName,
                         heading: _.capitalize(req.body.bHeading),
                         email: req.user.email,
@@ -509,6 +509,8 @@ app.post("/compose", upload.single('photo'), function(req, res) {
                         likes: 0,
                         dislikes: 0,
                         time: today.getTime() / 1000,
+                        author: req.user,
+
                     });
                     user.posts.push(blogPost);
 
@@ -562,7 +564,7 @@ app.post("/singlepost/:postName", function(req, res) {
                 year: "numeric",
             };
             var day = today.toLocaleDateString("en-US", options);
-            User.findOne({ email: req.user.email }, function(err, user) {
+            User.findOne({ _id: req.user._id }, function(err, user) {
                 if (user !== null) {
                     let comment = new Comment({
                         Author: req.user.userName,
@@ -643,7 +645,7 @@ app.post('/searchTag', function(req, res) {
 
 app.post('/register', function(req, res) {
     console.log(req.body.bPassword)
-    User.findOne({ email: req.user.email }, function(err, user) {
+    User.findOne({ _id: req.user._id }, function(err, user) {
         if (user !== null) {
             user.userName = req.body.bName;
             user.fbUrl = req.body.bUrl;
