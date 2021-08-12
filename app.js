@@ -60,6 +60,7 @@ let userSchema = new mongoose.Schema({
     },
 });
 let blogPostsSchema = {
+    userId: String,
     author: Object,
     authorName: String,
     heading: String,
@@ -288,7 +289,7 @@ app.get('/about', function(req, res) {
 
 //....................dynamic post route.............................
 
-app.get("/singlepost/:postName", function(req, res) {
+app.get("/singlepost/:_id", function(req, res) {
     let userName = "";
     let userEmail = "";
     if (req.isAuthenticated()) {
@@ -298,8 +299,8 @@ app.get("/singlepost/:postName", function(req, res) {
     } else {
 
     }
-    let reqTitlle = (req.params.postName);
-    BlogPost.findOne({ heading: reqTitlle }, function(err, post) {
+    let _id = (req.params._id);
+    BlogPost.findOne({ _id: _id }, function(err, post) {
         res.render("singlepost", { post: post, userName: userName, userEmail: userEmail, user: req.user });
 
     });
@@ -318,20 +319,14 @@ app.get('/tagsshow/:tag', function(req, res) {
     }
     let reqTag = req.params.tag;
     var lfound = 0;
-
-    TaggedPost.findOne({ tagName: reqTag }, function(err, tag) {
-        if (err) {
-            console.log(lfound);
-            res.redirect('/tagnotfound');
-        } else if (tag !== null) {
-
-            lfound = 1;
-            console.log(tag);
-            res.render('tagsshow', { blogPosts: tag.posts, tagName: tag.tagName, userName: userName, userEmail: userEmail, user: req.user });
-        } else if (tag === null) {
+    BlogPost.find({ tags: reqTag }, function(err, posts) {
+        if (posts.length !== 0) {
+            res.render('tagsshow', { blogPosts: posts, tagName: reqTag, userName: userName, userEmail: userEmail, user: req.user });
+        } else {
             res.redirect('/tagnotfound');
         }
     })
+
 })
 app.get('/userposts/:_id', function(req, res) {
     let userName = "";
@@ -345,11 +340,15 @@ app.get('/userposts/:_id', function(req, res) {
 
     }
     let _id = req.params._id;
+    let showposts;
+    BlogPost.find({ userId: _id }, function(err, posts) {
+        showposts = posts;
+    })
     User.findOne({ _id: _id }, function(err, user) {
         if (err) {
             console.log(err);
         } else if (user !== null) {
-            res.render('userposts', { blogPosts: user.posts, buser: user, userName: userName, userEmail: userEmail, user: req.user });
+            res.render('userposts', { blogPosts: showposts, buser: user, userName: userName, userEmail: userEmail, user: req.user });
 
         }
     })
@@ -477,77 +476,68 @@ app.post("/contact", function(req, res) {
 //......................compose route begin......................
 
 app.post("/compose", upload.single('photo'), function(req, res) {
-        User.findOne({ _id: req.user._id }, function(err, user) {
-            if (err) {
-                console.log(err);
-            } else if (user !== null) {
-                var today = new Date();
-                let options = {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                };
-                let rtags = (req.body.bTags).split(" ");
-                for (let i = 0; i < rtags.length; i++) {
-                    rtags[i] = _.lowerCase(rtags[i]);
-                    if (user.interest.indexOf(rtags[i]) === -1) {
-                        user.interest.push(rtags[i]);
-                    }
-                }
-                var day = today.toLocaleDateString("en-US", options);
-                if (req.file) {
-                    console.log(req.file.filename);
-                    let blogPost = new BlogPost({
-                        author: req.user,
-                        authorName: user.userName,
-                        heading: _.capitalize(req.body.bHeading),
-                        email: req.user.email,
-                        tags: rtags,
-                        date: day,
-                        message: req.body.bMsg,
-                        comments: [],
-                        img: req.file.filename, //img is imagename
-                        likes: 0,
-                        dislikes: 0,
-                        time: today.getTime() / 1000,
-                        author: req.user,
+    var today = new Date();
+    let options = {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    };
+    let rtags = (req.body.bTags).split(" ");
+    for (let i = 0; i < rtags.length; i++) {
+        rtags[i] = _.lowerCase(rtags[i]);
+        if (user.interest.indexOf(rtags[i]) === -1) {
+            user.interest.push(rtags[i]);
+        }
+    }
+    var day = today.toLocaleDateString("en-US", options);
+    if (req.file) {
+        console.log(req.file.filename);
+        let blogPost = new BlogPost({
+            userId: req.user._id,
+            author: req.user,
+            authorName: user.userName,
+            heading: _.capitalize(req.body.bHeading),
+            email: req.user.email,
+            tags: rtags,
+            date: day,
+            message: req.body.bMsg,
+            comments: [],
+            img: req.file.filename, //img is imagename
+            likes: 0,
+            dislikes: 0,
+            time: today.getTime() / 1000,
+            author: req.user,
 
-                    });
-                    user.posts.push(blogPost);
+        });
 
-                    user.save();
-                    blogPost.save();
+        blogPost.save();
+        res.redirect("/blogadded");
+    } else throw 'error';
 
-                    blogPost.tags.forEach(function(tag) {
-                        TaggedPost.findOne({ tagName: tag }, function(err, taggedPost) {
-                            if (taggedPost !== null) {
-                                taggedPost.posts.push(blogPost);
-                                taggedPost.save();
-                            } else {
-                                let newTp = new TaggedPost({
-                                    tagName: tag,
-                                    posts: blogPost,
-                                })
-                                console.log(newTp);
-                                newTp.save();
-                            }
-                        })
+})
 
-                    })
-                    res.redirect("/blogadded");
-                } else throw 'error';
-            } else if (user === null) {
-                res.redirect('/notregistered');
+
+
+//....................compose route ends.............................
+
+app.post('/singlepost/:_id', function(req, res) {
+    postId = (req.params._id);
+    BlogPost.findOne({ _id: postId }, function(err, post) {
+        if (post !== null) {
+            var today = new Date();
+            let options = {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+            };
+            var day = today.toLocaleDateString("en-US", options);
+            let comment = {
+                user: req.user.user,
+
             }
-
-        })
-
-
-        // } 
+        }
     })
-    //....................compose route ends.............................
-
-
+})
 app.post("/singlepost/:postName", function(req, res) {
     let reqTitlle = (req.params.postName);
     let userName = "";
@@ -637,7 +627,6 @@ app.post('/dislikePost', function(req, res) {
 
 app.post('/searchTag', function(req, res) {
     let stagName = _.lowerCase(req.body.query);
-
     res.redirect('/tagsshow/' + stagName);
 
 

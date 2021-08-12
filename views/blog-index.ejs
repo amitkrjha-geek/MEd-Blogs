@@ -28,14 +28,14 @@
 
                 <%for(let i=blogPosts.length-1; i>=0;i--)  { %>
                     <%let post =blogPosts[i]; %>
-                        <a href="/singlepost/<%= post.heading%>">
+                        <a href="/singlepost/<%= post._id%>">
                             <article class="col-12 col-md-6 tm-post p-4">
                                 <hr class="tm-hr-primary">
                                 <h2 class="tm-pt-30 tm-color-primary tm-post-title">
                                     <%= post.heading  %>
                                 </h2>
 
-                                <a href="/singlepost/<%= post.heading%>" class="effect-lily tm-post-link tm-pt-20">
+                                <a href="/singlepost/<%= post._id%>" class="effect-lily tm-post-link tm-pt-20">
                                     <div class=" tm-post-link-inner">
                                         <img src="/blogpage-assets/img/<%=post.img%>" alt="Image" height="300px" width="200px">
                                     </div>
@@ -49,7 +49,7 @@
 
                                     <%= post.message.substring(0,200)%>
                                         <% if(post.message.length>200){%>
-                                            ... <a href="/singlepost/<%= post.heading%>" class="tm-color-primary">Read More</a>
+                                            ... <a href="/singlepost/<%= post._id%>" class="tm-color-primary">Read More</a>
                                             <%}%>
                                 </p>
                                 <div class="d-flex justify-content-between tm-pt-45">
